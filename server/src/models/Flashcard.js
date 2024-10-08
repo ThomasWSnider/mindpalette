@@ -1,15 +1,15 @@
 import { Schema } from "mongoose";
 
-export const FlashcardsSchema = new Schema({
+export const FlashCardsSchema = new Schema({
   creatorId: { type: Schema.ObjectId, required: true, ref: "Account" },
-  title: { type: String, minLength: 3, maxLength: 50, required: true },
-  description: { type: String, maxLength: 200 },
+  question: { type: String, minLength: 1, maxLength: 200, required: true },
+  answer: { type: String, minLength: 1, maxLength: 50, required: true },
   deckId: { type: Schema.ObjectId, required: true, ref: "Deck" }
 }, { timestamps: true, toJSON: { virtuals: true } })
 
-FlashcardsSchema.virtual("creator", {
+FlashCardsSchema.virtual("creator", {
   localField: "creatorId",
   ref: "Account",
-  foreignField: "_id"
+  foreignField: "_id",
+  justOne: true
 })
-
