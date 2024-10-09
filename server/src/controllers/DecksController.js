@@ -9,6 +9,7 @@ export class DecksController extends BaseController {
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getAllUserDecks)
+      .get('/:deckId', this.getDeckById)
       .post("", this.createNewDeck)
   }
 
@@ -29,6 +30,17 @@ export class DecksController extends BaseController {
       const userId = request.userInfo.id
       const decks = await decksService.getAllUserDecks(userId)
       response.send(decks)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getDeckById(request, response, next) {
+    try {
+      const userId = request.userInfo.id
+      const deckId = request.params.deckId
+      const deck = await decksService.getDeckById(deckId, userId)
+      response.send(deck)
     } catch (error) {
       next(error)
     }
