@@ -1,3 +1,4 @@
+import { Auth0Provider } from "@bcwdev/auth0provider"
 import { decksService } from "../services/DecksService"
 import BaseController from "../utils/BaseController"
 
@@ -6,6 +7,9 @@ export class DecksController extends BaseController {
   constructor() {
     super('api/decks')
     this.router
+      .use(Auth0Provider.getAuthorizedUserInfo)
+      .get('', this.getAllUserDecks)
+      .post("", this.createNewDeck)
   }
 
   async createNewDeck(request, response, next) {
@@ -19,4 +23,15 @@ export class DecksController extends BaseController {
       next(error)
     }
   }
+
+  async getAllUserDecks(request, response, next) {
+    try {
+      const userId = request.userInfo.id
+      const decks = await decksService.getAllUserDecks(userId)
+      response.send(decks)
+    } catch (error) {
+      next(error)
+    }
+  }
+
 }
