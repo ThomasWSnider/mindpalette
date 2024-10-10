@@ -9,6 +9,21 @@ class DecksService {
     return newDeck
   }
 
+  async destroyDeck(deckId, userId) {
+    const deckToDestroy = await dbContext.Decks.findById(deckId)
+    if (deckToDestroy.creatorId != userId) throw new Forbidden('You can not delete a deck you did not create')
+  }
+
+  async editDeck(deckData, userId) {
+    const deckToEdit = await dbContext.Decks.findById(deckData.id)
+    if (deckToEdit.creatorId != userId) throw new Forbidden('You can not edit a deck you did not create')
+    deckToEdit.creatorId = deckToEdit.creatorId
+    deckToEdit.title = deckData.title || deckToEdit.title
+    deckToEdit.description = deckData.description || deckToEdit.description
+    await deckToEdit.save()
+    return `${deckToEdit.title} edited successfully`
+  }
+
   async getAllUserDecks(userId) {
     const userDecks = await dbContext.Decks.find({ creatorId: userId }).populate('cardCount')
     return userDecks

@@ -11,6 +11,7 @@ export class DecksController extends BaseController {
       .get('', this.getAllUserDecks)
       .get('/:deckId', this.getDeckById)
       .post("", this.createNewDeck)
+      .put('/:deckId', this.editDeck)
   }
 
   async createNewDeck(request, response, next) {
@@ -20,6 +21,28 @@ export class DecksController extends BaseController {
       deckData.creatorId = user.id
       const newDeck = await decksService.createNewDeck(deckData)
       response.send(newDeck)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async destroyDeck(request, response, next) {
+    try {
+      const userId = request.userInfo.id
+      const deckId = request.params.deckId
+      const message = await decksService.destroyDeck(deckId, userId)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async editDeck(request, response, next) {
+    try {
+      const userId = request.userInfo.id
+      const deckData = request.body
+      deckData.id = request.params.deckId
+      const message = await decksService.editDeck(deckData, userId)
+      response.send(message)
     } catch (error) {
       next(error)
     }
