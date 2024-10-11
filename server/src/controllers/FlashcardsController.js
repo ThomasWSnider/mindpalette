@@ -14,7 +14,7 @@ export class FlashcardsController extends BaseController {
       .put('/:flashcardId', this.editFlashcard)
       .delete('/:flashcardId', this.destroyFlashcard)
   }
-
+  // Create a new Flashcard
   async createFlashcard(request, response, next) {
     try {
       const flashcardData = request.body
@@ -25,7 +25,7 @@ export class FlashcardsController extends BaseController {
       next(error)
     }
   }
-
+  // Delete an existing Flashcard
   async destroyFlashcard(request, response, next) {
     try {
       const flashcardId = request.params.flashcardId
@@ -36,7 +36,7 @@ export class FlashcardsController extends BaseController {
       next(error)
     }
   }
-
+  // Update existing Flashcard data
   async editFlashcard(request, response, next) {
     try {
       const userId = request.userInfo.id
@@ -48,7 +48,7 @@ export class FlashcardsController extends BaseController {
       next(error)
     }
   }
-
+  // Fetch specific Flashcard's data
   async getFlashcardById(request, response, next) {
     try {
       const userId = request.userInfo.id
@@ -59,7 +59,7 @@ export class FlashcardsController extends BaseController {
       next(error)
     }
   }
-
+  // Fetch all Flashcards tied to a specific deck
   async getFlashcardsByDeckId(request, response, next) {
     try {
       const userId = request.userInfo.id

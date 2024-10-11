@@ -14,7 +14,7 @@ export class DecksController extends BaseController {
       .put('/:deckId', this.editDeck)
       .delete('/:deckId', this.destroyDeck)
   }
-
+  // Creates new Deck
   async createNewDeck(request, response, next) {
     try {
       const user = request.userInfo
@@ -26,7 +26,7 @@ export class DecksController extends BaseController {
       next(error)
     }
   }
-
+  // Deletes existing Deck
   async destroyDeck(request, response, next) {
     try {
       const userId = request.userInfo.id
@@ -37,7 +37,7 @@ export class DecksController extends BaseController {
       next(error)
     }
   }
-
+  // Modifies existing Deck data
   async editDeck(request, response, next) {
     try {
       const userId = request.userInfo.id
@@ -49,7 +49,7 @@ export class DecksController extends BaseController {
       next(error)
     }
   }
-
+  // Fetches all Decks tied to an account
   async getAllUserDecks(request, response, next) {
     try {
       const userId = request.userInfo.id
@@ -59,7 +59,7 @@ export class DecksController extends BaseController {
       next(error)
     }
   }
-
+  // Fetchess specific Deck
   async getDeckById(request, response, next) {
     try {
       const userId = request.userInfo.id
