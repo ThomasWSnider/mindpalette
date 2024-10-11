@@ -33,7 +33,7 @@ class DecksService {
 
   async getDeckById(deckId, userId) {
     const deck = await dbContext.Decks.findById(deckId).populate('cardCount')
-    if (deck.creatorId != userId) throw new Forbidden(`No deck found with an id of ${deckId}`)
+    if (deck.creatorId != userId) throw new Forbidden(`You may not access a deck you did not create`)
     return deck
   }
 
