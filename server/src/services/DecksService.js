@@ -12,6 +12,8 @@ class DecksService {
   async destroyDeck(deckId, userId) {
     const deckToDestroy = await dbContext.Decks.findById(deckId)
     if (deckToDestroy.creatorId != userId) throw new Forbidden('You can not delete a deck you did not create')
+    await deckToDestroy.deleteOne()
+    return `${deckToDestroy.title} has been deleted successfully`
   }
 
   async editDeck(deckData, userId) {

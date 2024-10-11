@@ -12,6 +12,7 @@ export class DecksController extends BaseController {
       .get('/:deckId', this.getDeckById)
       .post("", this.createNewDeck)
       .put('/:deckId', this.editDeck)
+      .delete('/:deckId', this.destroyDeck)
   }
 
   async createNewDeck(request, response, next) {
@@ -31,6 +32,7 @@ export class DecksController extends BaseController {
       const userId = request.userInfo.id
       const deckId = request.params.deckId
       const message = await decksService.destroyDeck(deckId, userId)
+      response.send(message)
     } catch (error) {
       next(error)
     }
