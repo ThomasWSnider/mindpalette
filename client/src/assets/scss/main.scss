@@ -1,6 +1,8 @@
 @import "./_variables.scss";
 @import "./_utilities.scss";
 @import "./loaders.scss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 
 body {
   overscroll-behavior: none;
@@ -11,13 +13,23 @@ body {
   flex-direction: column;
   min-height: 100vh;
   background-color: var(--bs-page);
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 main {
   flex-grow: 1;
+  background-image: url("/img/Background.png");
+  background-size: 100dvw 100dvh;
 }
 
 a {
   text-decoration: none;
 }
 
+.font-sacramento {
+  font-family: "Sacramento", cursive;
+  font-weight: 400;
+  font-style: normal;
+}

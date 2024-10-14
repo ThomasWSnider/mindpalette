@@ -11,8 +11,17 @@ import { AppState } from './AppState.js';
   <main>
     <router-view />
   </main>
-  <footer class="bg-dark text-light">
-    Made with 💖 by CodeWorks
+  <footer class="container-fluid">
+    <div class="row align-items-end">
+      <div class="col-12 mt-4 text-center">
+        <p class="fs-4 mb-2">|<span class="px-4"><a href="">Portfolio</a></span>|<span class="px-4"><a
+              href="">Portfolio</a></span>|<span class="px-4"><a href="">Portfolio</a></span>|<span class="px-4"><a
+              href="">Portfolio</a></span>|</p>
+      </div>
+      <div class="col-12 align-self-end">
+        <small>© 2024 MindPalette. All rights reserved.</small>
+      </div>
+    </div>
   </footer>
 </template>
 
@@ -20,17 +29,36 @@ import { AppState } from './AppState.js';
 @import '@/assets/scss/main.scss';
 
 :root {
-  --main-height: calc(100vh - 32px - 64px);
+  --main-height: calc(100vh - 64px);
 }
 
 footer {
-  display: grid;
-  place-content: center;
-  height: 32px;
+  height: 104px;
+  background-color: var(--bs-text);
+  color: var(--bs-page);
+
+  .row {
+    height: 104px;
+  }
+
+  a {
+    color: var(--bs-page);
+
+    &:hover {
+      opacity: .66;
+      transition: opacity 0.1s ease-in-out;
+    }
+  }
+
+  small {
+    color: var(--bs-page);
+    opacity: 0.5;
+  }
 }
 
 main {
   background-image: url("/img/Background.png");
   background-size: 100dvw 100dvh;
+  min-height: var(--main-height);
 }
 </style>
