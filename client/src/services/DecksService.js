@@ -6,8 +6,7 @@ class DecksService {
 
   async getUserDecks() {
     const response = await api.get('api/decks')
-    logger.log('decks received', response);
-    
+    const decks = response.data.map((deck) => new Deck(deck))
   }
 }
 
