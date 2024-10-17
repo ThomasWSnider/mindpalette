@@ -39,7 +39,7 @@ async function getUserDecks() {
 <style scoped lang="scss">
 .content-container {
   background-color: #FFFFFF;
-  height: 68vh;
+  min-height: 68vh;
   max-width: 100vw;
   width: 70vw;
   position: absolute;

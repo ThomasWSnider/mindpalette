@@ -7,7 +7,7 @@ defineProps({ deck: Deck })
 
 
 <template>
-  <div class="card text-bg-dark mb-3 shadow">
+  <div class="card text-bg-dark mb-3 selectable shadow">
     <img :src="deck.coverImg" class="card-img" :alt="deck.description">
     <div class="card-count">
       <p class="fw-semibold m-0">{{ deck.cardCount }}</p>
@@ -27,24 +27,31 @@ img {
 }
 
 .card {
-  height: 150px;
+  width: 100%;
+  aspect-ratio: 1/1;
 }
 
 .deck-title {
   position: absolute;
   width: 100%;
   bottom: 0;
-  padding: 0 .5em 0 .5em;
-  background: #00000000;
-  background: linear-gradient(180deg, #00000000 0%, #000000 100%);
+  padding: 0 .5em .33em .5em;
+  height: 33%;
+  background: transparent;
+  background: linear-gradient(to bottom, transparent 0%, #000000 100%);
+
+  >p {
+    height: 1em;
+  }
 }
 
 .card-count {
   position: absolute;
-  top: 0%;
-  right: 0%;
+  top: -.33%;
+  right: -.33%;
   padding: 0 .5em 0 .5em;
+  max-height: 33%;
   border-top-right-radius: var(--bs-border-radius);
-  background: linear-gradient(to bottom left, #0c0c0c8d, transparent)
+  background: linear-gradient(to bottom left, #0c0c0c8d, transparent);
 }
 </style>
