@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from "@/AppState";
 import DeckCard from "@/components/DeckCard.vue";
+import NewDeckButton from "@/components/NewDeckButton.vue";
 import { decksService } from "@/services/DecksService";
 import Pop from "@/utils/Pop";
 import { computed, onMounted } from "vue";
@@ -29,6 +30,9 @@ async function getUserDecks() {
         <div class="row mt-5 mx-2">
           <div v-for="deck in decks" :key="deck.id" class="col-md-4 col-sm-6 col-12">
             <DeckCard :deck="deck" />
+          </div>
+          <div class="col-md-4 col-sm-6 col-12">
+            <NewDeckButton />
           </div>
         </div>
       </div>

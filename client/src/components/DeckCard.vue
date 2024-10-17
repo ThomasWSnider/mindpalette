@@ -41,7 +41,7 @@ img {
   background: linear-gradient(to bottom, transparent 0%, #000000 100%);
 
   >p {
-    height: 1em;
+    min-height: 1em;
   }
 }
 
