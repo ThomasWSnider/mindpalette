@@ -1,10 +1,16 @@
 <script setup>
+import { Modal } from "bootstrap";
+
+
+function openModal() {
+  Modal.getOrCreateInstance('#create-deck-modal').show()
+}
 
 </script>
 
 
 <template>
-  <div class="card mb-3 selectable ">
+  <div @click="openModal" class="card mb-3 selectable" role="button">
     <div class="blank-space rounded"></div>
     <div class="circle">
       <div class="cross-y-axis"></div>

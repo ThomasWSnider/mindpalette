@@ -32,6 +32,10 @@ import { AppState } from './AppState.js';
   --main-height: calc(100vh - 64px);
 }
 
+main {
+  min-height: var(--main-height);
+}
+
 footer {
   height: 104px;
   background-color: var(--bs-text);
@@ -54,11 +58,5 @@ footer {
     color: var(--bs-page);
     opacity: 0.5;
   }
-}
-
-main {
-  background-image: url("/img/Background.png");
-  background-size: 100dvw 100dvh;
-  min-height: var(--main-height);
 }
 </style>

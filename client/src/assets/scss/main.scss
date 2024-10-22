@@ -13,6 +13,8 @@ body {
   flex-direction: column;
   min-height: 100vh;
   background-color: var(--bs-page);
+  background-image: url("/img/Background.png");
+  background-size: 100dvw 1700px;
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
@@ -20,8 +22,6 @@ body {
 
 main {
   flex-grow: 1;
-  background-image: url("/img/Background.png");
-  background-size: 100dvw 100dvh;
 }
 
 a {
