@@ -18,8 +18,10 @@ async createNewDeck(deckData) {
     AppState.decks = decks
   }
 
-  selectDeck(deckId){
-    AppState.decks.find((deck) => deck.id == deckId)
+  async getDeckById(deckId) {
+    const response = await api.get(`api/decks/${deckId}`)
+    const focusedDeck = new Deck(response.data)
+    AppState.focusedDeck = focusedDeck
   }
 }
 

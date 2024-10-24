@@ -1,28 +1,25 @@
 <script setup>
 import { Deck } from "@/models/Deck";
-import { decksService } from "@/services/DecksService";
+import { useRouter } from "vue-router";
 
 
 defineProps({ deck: Deck })
 
-
-function selectDeck(deckId) {
-  decksService.selectDeck(deckId)
-
-}
 </script>
 
 
 <template>
-  <div @click="selectDeck(deck.id)" class="card text-bg-dark mb-3 selectable shadow">
-    <img :src="deck.coverImg" class="card-img" :alt="deck.description">
-    <div class="card-count">
-      <p class="fw-semibold m-0">{{ deck.cardCount }}</p>
+  <RouterLink :to="{ name: 'Deck', params: { deckId: deck.id } }">
+    <div class="card text-bg-dark mb-3 selectable shadow">
+      <img :src="deck.coverImg" class="card-img" :alt="deck.description">
+      <div class="card-count">
+        <p class="fw-semibold m-0">{{ deck.cardCount }}</p>
+      </div>
+      <div class="deck-title d-flex align-items-end rounded-bottom">
+        <p class="fw-semibold fs-6 mb-1">{{ deck.title }}</p>
+      </div>
     </div>
-    <div class="deck-title d-flex align-items-end rounded-bottom">
-      <p class="fw-semibold fs-6 mb-1">{{ deck.title }}</p>
-    </div>
-  </div>
+  </RouterLink>
 </template>
 
 
