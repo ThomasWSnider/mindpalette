@@ -5,6 +5,7 @@ import { AppState } from "@/AppState.js"
 class FlashcardsService{
 
   async getFlashcardsByDeckId(deckId){
+    AppState.flashcards.length = 0
     const response = await api.get(`api/flashcards/collections/${deckId}`)
     const flashcards = response.data.map((flashcard) => new Flashcard(flashcard))
     AppState.flashcards = flashcards
