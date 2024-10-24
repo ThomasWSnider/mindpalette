@@ -16,7 +16,8 @@ import { AppState } from './AppState.js';
       <div class="col-12 mt-4 text-center">
         <p class="fs-4 mb-2">|<span class="px-4"><a href="">Portfolio</a></span>|<span class="px-4"><a
               href="">Portfolio</a></span>|<span class="px-4"><a href="">Portfolio</a></span>|<span class="px-4"><a
-              href="">Portfolio</a></span>|</p>
+              href="">Portfolio</a></span>|
+        </p>
       </div>
       <div class="col-12 align-self-end">
         <small>© 2024 MindPalette. All rights reserved.</small>

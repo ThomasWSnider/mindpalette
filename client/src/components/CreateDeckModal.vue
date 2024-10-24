@@ -3,6 +3,7 @@ import { Modal } from "bootstrap";
 
 
 function closeModal() {
+  document.getElementById("content-container").style.paddingRight = ``
   Modal.getOrCreateInstance('#create-deck-modal').hide()
 }
 

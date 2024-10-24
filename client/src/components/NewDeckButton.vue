@@ -3,6 +3,8 @@ import { Modal } from "bootstrap";
 
 
 function openModal() {
+  // const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+  // document.getElementById("content-container").style.marginRight = `${scrollbarWidth}px`
   Modal.getOrCreateInstance('#create-deck-modal').show()
 }
 
@@ -10,7 +12,7 @@ function openModal() {
 
 
 <template>
-  <div @click="openModal" class="card mb-3 selectable" role="button">
+  <div @click="openModal()" class="card mb-3 selectable" role="button">
     <div class="blank-space rounded"></div>
     <div class="circle">
       <div class="cross-y-axis"></div>
