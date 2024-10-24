@@ -18,6 +18,12 @@ const routes = [
     component: loadPage('AboutPage')
   },
   {
+    path: '/decks/:deckId',
+    name: 'Deck',
+    component: loadPage('DeckPage'),
+    beforeEnter: authSettled
+  },
+  {
     path: '/account',
     name: 'Account',
     component: loadPage('AccountPage'),

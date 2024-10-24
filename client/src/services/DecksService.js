@@ -17,6 +17,10 @@ async createNewDeck(deckData) {
     const decks = response.data.map((deck) => new Deck(deck))
     AppState.decks = decks
   }
+
+  selectDeck(deckId){
+    AppState.decks.find((deck) => deck.id == deckId)
+  }
 }
 
 export const decksService = new DecksService()
