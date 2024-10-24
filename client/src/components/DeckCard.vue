@@ -49,7 +49,8 @@ img {
   position: absolute;
   top: -.33%;
   right: -.33%;
-  padding: 0 .5em 0 .5em;
+  padding: 0 .5em .75em .75em;
+  border-radius: .375rem .375rem .375rem 50rem;
   max-height: 33%;
   border-top-right-radius: var(--bs-border-radius);
   background: linear-gradient(to bottom left, #0c0c0c8d, transparent);
