@@ -1,6 +1,8 @@
 <script setup>
 import { AppState } from "@/AppState";
+import FlashcardSummary from "@/components/FlashcardSummary.vue";
 import { decksService } from "@/services/DecksService";
+import { flashcardsService } from "@/services/FlashcardsService";
 import Pop from "@/utils/Pop";
 import { computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -8,6 +10,7 @@ import { useRoute, useRouter } from "vue-router";
 const route = useRoute()
 const router = useRouter()
 const deck = computed(() => AppState.focusedDeck)
+const flashcards = computed(() => AppState.flashcards)
 
 onMounted(() => {
   getDeckById(route.params.deckId)
@@ -16,6 +19,17 @@ onMounted(() => {
 async function getDeckById(deckId) {
   try {
     await decksService.getDeckById(deckId)
+    await getFlashcardsByDeckId(route.params.deckId)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
+async function getFlashcardsByDeckId(deckId) {
+  try {
+    await flashcardsService.getFlashcardsByDeckId(deckId)
+
   }
   catch (error) {
     Pop.error(error);
@@ -30,8 +44,8 @@ async function getDeckById(deckId) {
     <div id="content-container" class="shadow rounded px-3 mt-5">
       <p class="fs-3 fw-semibold m-2">{{ deck.title }}</p>
       <div class="row mt-4 mx-2">
-        <div class="col-12">
-
+        <div v-for="flashcard in flashcards" :key="flashcard.id" class="col-12">
+          <FlashcardSummary />
         </div>
       </div>
     </div>

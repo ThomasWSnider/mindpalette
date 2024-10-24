@@ -9,6 +9,8 @@ export const AppState = reactive({
   /**@type {import('./models/Deck.js').Deck[]} all decks tied to the Account*/
   decks: [],
   /**@type {import('./models/Deck.js').Deck} deck selected by User*/
-  focusedDeck: null
+  focusedDeck: null,
+  /**@type {import('./models/Flashcard.js').Flashcard[]} flashcards tied to focused deck*/
+  flashcards: []
 })
 
