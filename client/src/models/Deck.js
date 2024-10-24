@@ -1,4 +1,4 @@
-import { DbItem } from "./DBItem.js";
+import { DbItem } from "./DbItem.js"
 
 export class Deck extends DbItem {
   constructor(data){
