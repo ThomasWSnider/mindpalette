@@ -11,6 +11,8 @@ export const AppState = reactive({
   /**@type {import('./models/Deck.js').Deck} deck selected by User*/
   focusedDeck: null,
   /**@type {import('./models/Flashcard.js').Flashcard[]} flashcards tied to focused deck*/
-  flashcards: []
+  flashcards: [],
+    /**@type {import('./models/Flashcard.js').Flashcard} flashcards tied to focused deck*/
+    flashcardToEdit: null
 })
 

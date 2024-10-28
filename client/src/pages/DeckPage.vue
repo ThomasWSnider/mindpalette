@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from "@/AppState";
+import EditFlashcardModal from "@/components/EditFlashcardModal.vue";
 import FlashcardSummary from "@/components/FlashcardSummary.vue";
 import NewFlashcardModal from "@/components/NewFlashcardModal.vue";
 import { decksService } from "@/services/DecksService";
@@ -67,6 +68,7 @@ async function getFlashcardsByDeckId(deckId) {
     </div>
   </section>
   <NewFlashcardModal />
+  <EditFlashcardModal />
 </template>
 
 
