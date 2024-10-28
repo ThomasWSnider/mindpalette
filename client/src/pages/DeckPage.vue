@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from "@/AppState";
 import FlashcardSummary from "@/components/FlashcardSummary.vue";
+import NewFlashcardModal from "@/components/NewFlashcardModal.vue";
 import { decksService } from "@/services/DecksService";
 import { flashcardsService } from "@/services/FlashcardsService";
 import Pop from "@/utils/Pop";
@@ -46,7 +47,8 @@ async function getFlashcardsByDeckId(deckId) {
         <div class="col-12 d-flex justify-content-between align-items-center">
           <p class="fs-1 fw-bold m-2 mb-4">{{ deck.title }}</p>
           <div>
-            <button class="btn btn-primary fw-semibold m-3">
+            <button class="btn btn-primary fw-semibold m-3" data-bs-toggle="modal"
+              data-bs-target="#new-flashcard-modal">
               New Flashcard
             </button>
           </div>
@@ -64,6 +66,7 @@ async function getFlashcardsByDeckId(deckId) {
       </div>
     </div>
   </section>
+  <NewFlashcardModal />
 </template>
 
 
