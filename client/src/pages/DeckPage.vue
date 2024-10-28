@@ -41,11 +41,18 @@ async function getFlashcardsByDeckId(deckId) {
 
 <template>
   <section v-if="deck" class="d-flex align-items-center justify-content-center mt-5">
-    <div id="content-container" class="shadow rounded px-3 mt-5">
-      <p class="fs-3 fw-semibold m-2">{{ deck.title }}</p>
-      <div class="row mt-4 mx-2">
+    <div id="content-container" class="shadow rounded px-3 mt-5 container">
+      <div class="row mt-3">
+        <p class="fs-1 fw-bold m-2 mb-4 col-12">{{ deck.title }}</p>
+        <div class="col-12 d-flex mb-1">
+          <p class="fs-4 mx-auto fw-semibold">Question</p>
+          <p class="fs-4 mx-auto fw-semibold">Answer</p>
+          <div class="space-maker ms-md-5 ms-2"></div>
+        </div>
+      </div>
+      <div class="row mx-2">
         <div v-for="flashcard in flashcards" :key="flashcard.id" class="col-12">
-          <FlashcardSummary />
+          <FlashcardSummary :flashcard="flashcard" />
         </div>
       </div>
     </div>
@@ -59,5 +66,10 @@ async function getFlashcardsByDeckId(deckId) {
   min-height: 68vh;
   max-width: 100vw;
   width: 70vw;
+}
+
+.space-maker {
+  max-width: 132px;
+  min-width: 2rem;
 }
 </style>
