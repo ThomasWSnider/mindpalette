@@ -1,15 +1,28 @@
 <script setup>
 import { Flashcard } from "@/models/Flashcard";
+import { flashcardsService } from "@/services/FlashcardsService";
+import Pop from "@/utils/Pop";
 
 
 defineProps({ flashcard: Flashcard })
+
+async function destroyFlashcard(flashcardId) {
+  try {
+    const confirm = await Pop.confirm('Are you sure you want to delete this flashcard?', "It will be irretrievable")
+    if (!confirm) return
+    await flashcardsService.destroyFlashcard(flashcardId)
+  } catch (error) {
+    Pop.error(error);
+  }
+}
 
 </script>
 
 
 <template>
   <div class="d-flex justify-content-between mb-4">
-    <i role="button" class="mdi mdi-close text-danger fs-2 selectable rounded my-auto"></i>
+    <i @click="destroyFlashcard(flashcard.id)" role="button"
+      class="mdi mdi-close text-danger fs-2 selectable rounded my-auto"></i>
     <div class="card-info rounded-4 shadow row">
       <p class="my-auto col-6 py-1 fw-semibold">{{ flashcard.question }}</p>
       <p class="my-auto pe-4 col-4 py-1 text-center">{{ flashcard.answer }}</p>
