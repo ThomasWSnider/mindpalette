@@ -30,6 +30,12 @@ const routes = [
     beforeEnter: authSettled
   },
   {
+    path: '/study',
+    name: 'Study',
+    component: loadPage('StudyPage'),
+    beforeEnter: authSettled
+  },
+  {
     path: '/account',
     name: 'Account',
     component: loadPage('AccountPage'),

@@ -45,7 +45,7 @@ function toggleTheme() {
       </ul>
       <ul class="navbar-nav me-md-5 me-2">
         <li>
-          <router-link :to="{ name: 'About' }" class="btn text-dark lighten-30 selectable text-uppercase fw-semibold">
+          <router-link :to="{ name: 'Study' }" class="btn text-dark lighten-30 selectable text-uppercase fw-semibold">
             Study
           </router-link>
         </li>
