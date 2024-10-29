@@ -34,7 +34,7 @@ async function destroyFlashcard(flashcardId) {
       <p class="my-auto pe-4 col-4 py-1 text-center">{{ flashcard.answer }}</p>
       <button @click="openEditModal(flashcard.id)"
         class="edit-button btn btn-success rounded-end-4 rounded-start-0 col-2 text-light">
-        <p class="fw-semibold m-0 d-none d-md-block">Edit</p>
+        <p class="fw-semibold m-0 d-none d-md-block fs-5">Edit</p>
         <i class="mdi mdi-file-document-edit-outline d-block d-md-none"></i>
       </button>
     </div>

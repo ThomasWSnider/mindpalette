@@ -6,6 +6,10 @@ import { AppState } from "@/AppState.js"
 
 class DecksService {
 
+  clearFocusedDeck(){
+    AppState.focusedDeck = null
+  }
+
 async createNewDeck(deckData) {
   const response = await api.post("api/decks", deckData)
   const newDeck = new Deck(response.data)
@@ -19,6 +23,7 @@ async createNewDeck(deckData) {
   }
 
   async getDeckById(deckId) {
+    AppState.focusedDeck = null
     const response = await api.get(`api/decks/${deckId}`)
     const focusedDeck = new Deck(response.data)
     AppState.focusedDeck = focusedDeck

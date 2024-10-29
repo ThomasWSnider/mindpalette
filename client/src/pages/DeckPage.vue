@@ -21,6 +21,10 @@ onMounted(() => {
 async function getDeckById(deckId) {
   try {
     await decksService.getDeckById(deckId)
+    if (deck.value.cardCount <= 0) {
+      decksService.clearFocusedDeck()
+      return
+    }
     await getFlashcardsByDeckId(route.params.deckId)
   }
   catch (error) {
@@ -31,7 +35,6 @@ async function getDeckById(deckId) {
 async function getFlashcardsByDeckId(deckId) {
   try {
     await flashcardsService.getFlashcardsByDeckId(deckId)
-
   }
   catch (error) {
     Pop.error(error);
@@ -42,27 +45,29 @@ async function getFlashcardsByDeckId(deckId) {
 
 
 <template>
-  <section v-if="deck" class="d-flex align-items-center justify-content-center mt-5">
+  <section class="d-flex align-items-center justify-content-center mt-5">
     <div id="content-container" class="shadow rounded px-3 mt-5 container pb-4">
-      <div class="row mt-3">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-          <p class="fs-1 fw-bold m-2 mb-4">{{ deck.title }}</p>
-          <div>
-            <button class="btn btn-primary fw-semibold m-3" data-bs-toggle="modal"
-              data-bs-target="#new-flashcard-modal">
-              New Flashcard
-            </button>
+      <div v-if="deck">
+        <div class="row mt-3">
+          <div class="col-12 d-flex justify-content-between align-items-center">
+            <p class="fs-1 fw-bold m-2 mb-4">{{ deck.title }}</p>
+            <div>
+              <button class="btn btn-primary fw-semibold m-3" data-bs-toggle="modal"
+                data-bs-target="#new-flashcard-modal">
+                New Flashcard
+              </button>
+            </div>
+          </div>
+          <div class="col-12 d-flex mb-1">
+            <p class="fs-4 mx-auto fw-semibold">Question</p>
+            <p class="fs-4 mx-auto fw-semibold">Answer</p>
+            <div class="space-maker ms-md-5 ms-2"></div>
           </div>
         </div>
-        <div class="col-12 d-flex mb-1">
-          <p class="fs-4 mx-auto fw-semibold">Question</p>
-          <p class="fs-4 mx-auto fw-semibold">Answer</p>
-          <div class="space-maker ms-md-5 ms-2"></div>
-        </div>
-      </div>
-      <div class="row mx-2">
-        <div v-for="flashcard in flashcards" :key="flashcard.id" class="col-12">
-          <FlashcardSummary :flashcard="flashcard" />
+        <div class="row mx-2">
+          <div v-for="flashcard in flashcards" :key="flashcard.id" class="col-12">
+            <FlashcardSummary :flashcard="flashcard" />
+          </div>
         </div>
       </div>
     </div>
