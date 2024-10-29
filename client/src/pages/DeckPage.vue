@@ -29,7 +29,7 @@ async function getUserDecks() {
       <p class="fs-3 fw-semibold mt-2 mb-5 ms-2">Decks</p>
       <div class="row mt-5 mx-2">
         <div v-for="deck in decks" :key="deck.id" class="col-lg-3 col-md-4 col-sm-6 col-12">
-          <DeckCard :deck="deck" />
+          <DeckCard :deck="deck" :isStudyDeck="false" />
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-12">
           <NewDeckButton />

@@ -2,8 +2,10 @@
 import { onMounted, ref } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
+import { useRoute } from "vue-router";
 
 const theme = ref(loadState('theme') || 'light')
+const route = useRoute()
 
 onMounted(() => {
   document.documentElement.setAttribute('data-bs-theme', theme.value)
@@ -43,11 +45,12 @@ function toggleTheme() {
           </router-link>
         </li>
       </ul>
-      <ul class="navbar-nav me-md-5 me-2">
+      <ul class="navbar-nav me-md-5 me-2" data-bs-toggle="modal" data-bs-target="#select-study-deck-modal">
         <li>
-          <router-link :to="{ name: 'Study' }" class="btn text-dark lighten-30 selectable text-uppercase fw-semibold">
+          <p class="btn text-dark lighten-30 selectable text-uppercase fw-semibold m-0"
+            :class="{ 'on-study-page': route.name == 'Study' }">
             Study
-          </router-link>
+          </p>
         </li>
       </ul>
       <!-- LOGIN COMPONENT HERE -->
@@ -65,6 +68,12 @@ function toggleTheme() {
 <style scoped>
 a:hover {
   text-decoration: none;
+}
+
+.on-study-page {
+  border-bottom: 2px solid var(--bs-dark);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .navbar-nav .router-link-exact-active {

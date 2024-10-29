@@ -1,6 +1,7 @@
 <script setup>
 import Navbar from './components/Navbar.vue';
 import { AppState } from './AppState.js';
+import SelectStudyDeckModal from "./components/globals/SelectStudyDeckModal.vue";
 
 </script>
 
@@ -24,6 +25,7 @@ import { AppState } from './AppState.js';
       </div>
     </div>
   </footer>
+  <SelectStudyDeckModal />
 </template>
 
 <style lang="scss">

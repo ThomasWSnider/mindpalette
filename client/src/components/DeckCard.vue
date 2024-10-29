@@ -5,7 +5,7 @@ import Pop from "@/utils/Pop";
 import { useRouter } from "vue-router";
 
 
-defineProps({ deck: Deck })
+defineProps({ deck: Deck, isStudyDeck: Boolean })
 
 async function destroyDeck(deck) {
   try {
@@ -23,7 +23,20 @@ async function destroyDeck(deck) {
 
 
 <template>
-  <RouterLink :to="{ name: 'Flashcard', params: { deckId: deck.id } }">
+  <RouterLink v-if="isStudyDeck" :to="{ name: 'Study', params: { deckId: deck.id } }">
+    <div class="card text-bg-dark mb-3 selectable shadow" data-bs-toggle="modal"
+      data-bs-target="#select-study-deck-modal">
+      <img :src="deck.coverImg" class="card-img" :alt="deck.description">
+      <div class="card-count">
+        <p class="fw-semibold m-0">{{ deck.cardCount }}</p>
+      </div>
+      <div class="deck-title d-flex align-items-end rounded-bottom">
+        <p class="fw-semibold fs-6 mb-1">{{ deck.title }}</p>
+      </div>
+    </div>
+  </RouterLink>
+
+  <RouterLink v-else :to="{ name: 'Flashcard', params: { deckId: deck.id } }">
     <div class="card text-bg-dark mb-3 selectable shadow">
       <button @click.prevent="destroyDeck(deck)" role="button" class="delete-button">
         <p class="text-light m-0 fs-5"><i class="mdi mdi-delete-outline"></i></p>
@@ -51,6 +64,7 @@ img {
 .card {
   width: 100%;
   aspect-ratio: 1/1;
+  max-height: 33dvh;
 
   &:hover {
     .delete-button {
