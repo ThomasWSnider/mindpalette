@@ -1,93 +1,50 @@
 <script setup>
 import { AppState } from "@/AppState";
-import EditFlashcardModal from "@/components/EditFlashcardModal.vue";
-import FlashcardSummary from "@/components/FlashcardSummary.vue";
-import NewFlashcardModal from "@/components/NewFlashcardModal.vue";
+import CreateDeckModal from "@/components/CreateDeckModal.vue";
+import DeckCard from "@/components/DeckCard.vue";
+import NewDeckButton from "@/components/NewDeckButton.vue";
 import { decksService } from "@/services/DecksService";
-import { flashcardsService } from "@/services/FlashcardsService";
 import Pop from "@/utils/Pop";
 import { computed, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
 
-const route = useRoute()
-const router = useRouter()
-const deck = computed(() => AppState.focusedDeck)
-const flashcards = computed(() => AppState.flashcards)
+const decks = computed(() => AppState.decks)
 
 onMounted(() => {
-  getDeckById(route.params.deckId)
+  getUserDecks()
 })
 
-async function getDeckById(deckId) {
+async function getUserDecks() {
   try {
-    await decksService.getDeckById(deckId)
-    if (deck.value.cardCount <= 0) {
-      decksService.clearFocusedDeck()
-      return
-    }
-    await getFlashcardsByDeckId(route.params.deckId)
-  }
-  catch (error) {
-    Pop.error(error);
-  }
-}
-
-async function getFlashcardsByDeckId(deckId) {
-  try {
-    await flashcardsService.getFlashcardsByDeckId(deckId)
-  }
-  catch (error) {
+    await decksService.getUserDecks()
+  } catch (error) {
     Pop.error(error);
   }
 }
 
 </script>
 
-
 <template>
   <section class="d-flex align-items-center justify-content-center mt-5">
-    <div id="content-container" class="shadow rounded px-3 mt-5 container pb-4">
-      <div v-if="deck">
-        <div class="row mt-3">
-          <div class="col-12 d-flex justify-content-between align-items-center">
-            <p class="fs-1 fw-bold m-2 mb-4">{{ deck.title }}</p>
-            <div>
-              <button class="btn btn-primary fw-semibold m-3" data-bs-toggle="modal"
-                data-bs-target="#new-flashcard-modal">
-                New Flashcard
-              </button>
-            </div>
-          </div>
-          <div class="col-12 d-flex mb-1">
-            <p class="fs-4 mx-auto fw-semibold">Question</p>
-            <p class="fs-4 mx-auto fw-semibold">Answer</p>
-            <div class="space-maker ms-md-5 ms-2"></div>
-          </div>
+    <div id="content-container" class="shadow rounded px-3 mt-5">
+      <p class="fs-3 fw-semibold mt-2 mb-5 ms-2">Decks</p>
+      <div class="row mt-5 mx-2">
+        <div v-for="deck in decks" :key="deck.id" class="col-lg-3 col-md-4 col-sm-6 col-12">
+          <DeckCard :deck="deck" />
         </div>
-        <div class="row mx-2">
-          <div v-for="flashcard in flashcards" :key="flashcard.id" class="col-12">
-            <FlashcardSummary :flashcard="flashcard" />
-          </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+          <NewDeckButton />
         </div>
       </div>
     </div>
   </section>
-  <NewFlashcardModal />
-  <EditFlashcardModal />
+  <CreateDeckModal />
 </template>
 
-
-<style lang="scss" scoped>
+<style scoped lang="scss">
 #content-container {
   background-color: #FFFFFF;
   min-height: 68vh;
   max-width: 100vw;
   width: 70vw;
-  margin-bottom: 104px;
-}
-
-.space-maker {
-  max-width: 132px;
-  min-width: 2rem;
 }
 </style>

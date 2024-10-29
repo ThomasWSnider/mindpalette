@@ -18,9 +18,15 @@ const routes = [
     component: loadPage('AboutPage')
   },
   {
-    path: '/decks/:deckId',
+    path: '/decks',
     name: 'Deck',
     component: loadPage('DeckPage'),
+    beforeEnter: authSettled
+  },
+  {
+    path: '/flashcards/:deckId',
+    name: 'Flashcard',
+    component: loadPage('FlashcardPage'),
     beforeEnter: authSettled
   },
   {
