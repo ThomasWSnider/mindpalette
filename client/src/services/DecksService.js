@@ -16,6 +16,12 @@ async createNewDeck(deckData) {
   AppState.decks.push(newDeck)
 }
 
+async destroyDeck(deckId){
+  await api.delete(`api/decks/${deckId}`)
+  const deckToDeleteIndex = AppState.decks.findIndex((deck) => deck.id === deckId)
+  AppState.decks.splice(deckToDeleteIndex, 1)
+}
+
   async getUserDecks() {
     const response = await api.get('api/decks')
     const decks = response.data.map((deck) => new Deck(deck))
