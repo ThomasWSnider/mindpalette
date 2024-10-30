@@ -2,8 +2,9 @@
 import { AppState } from "@/AppState";
 import { decksService } from "@/services/DecksService";
 import { flashcardsService } from "@/services/FlashcardsService";
+import { logger } from "@/utils/Logger";
 import Pop from "@/utils/Pop";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute()
@@ -11,6 +12,7 @@ const deck = computed(() => AppState.focusedDeck)
 const flashcards = computed(() => AppState.flashcards)
 const focusedFlashcard = computed(() => AppState.focusedFlashcard)
 let currentFlashcardIndex = 0
+let showAnswer = ref(false)
 
 onMounted(() => {
   getDeckById(route.params.deckId)
@@ -48,17 +50,24 @@ function setFocusedFlashcard(flashcardIndex) {
 function decrementFlashcard() {
   currentFlashcardIndex -= 1
   if (currentFlashcardIndex < 0) currentFlashcardIndex = flashcards.value.length - 1
+  showAnswer.value = false
   setFocusedFlashcard(currentFlashcardIndex)
 }
 
 function incrementFlashcard() {
   currentFlashcardIndex += 1
   if (currentFlashcardIndex > flashcards.value.length - 1) currentFlashcardIndex = 0
+  showAnswer.value = false
   setFocusedFlashcard(currentFlashcardIndex)
+}
+
+function toggleAnswer() {
+  showAnswer.value = !showAnswer.value
 }
 
 function shuffleFlashcards() {
   flashcardsService.shuffleFlashcards()
+  showAnswer.value = false
   setFocusedFlashcard(0)
 }
 
@@ -74,7 +83,7 @@ function shuffleFlashcards() {
           <p class="fs-3 m-0">Card {{ `${currentFlashcardIndex + 1}/${flashcards.length}` }}</p>
         </div>
         <div class="col-12 d-flex justify-content-center mb-3">
-          <div id="flashcard" class="shadow-lg pt-1">
+          <div @click="toggleAnswer()" id="flashcard" class="shadow-lg pt-1">
             <hr class="mt-5 red-line">
             <hr class="blue-line">
             <hr class="blue-line">
@@ -83,8 +92,9 @@ function shuffleFlashcards() {
             <hr class="blue-line">
             <hr class="blue-line">
             <hr class="blue-line m-0">
-            <div v-if="focusedFlashcard" class="question">
-              <p class="display-4 text-center fw-medium">{{ focusedFlashcard.question }}</p>
+            <div v-if="focusedFlashcard" class="flashcard-text">
+              <p v-if="showAnswer" class="display-4 text-center fw-medium">{{ focusedFlashcard.answer }}</p>
+              <p v-else class="display-4 text-center fw-medium">{{ focusedFlashcard.question }}</p>
             </div>
           </div>
         </div>
@@ -117,13 +127,18 @@ function shuffleFlashcards() {
   aspect-ratio: 5/3;
   background-color: #f7ea5a;
   position: relative;
+  cursor: pointer;
 
-  >.question {
+  >.flashcard-text {
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90%;
+
+    >p {
+      user-select: none;
+    }
   }
 
   >hr.red-line {
