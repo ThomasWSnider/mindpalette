@@ -30,6 +30,7 @@ const deck = computed(() => AppState.focusedDeck)
             <hr class="blue-line">
             <hr class="blue-line m-0">
           </div>
+          <p></p>
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ import { Modal } from "bootstrap";
 defineProps({ flashcard: Flashcard })
 
 function openEditModal(flashcardId) {
-  flashcardsService.setFlashcardToEdit(flashcardId)
+  flashcardsService.setFocusedFlashcard(flashcardId)
   Modal.getOrCreateInstance('#edit-flashcard-modal').show()
 }
 

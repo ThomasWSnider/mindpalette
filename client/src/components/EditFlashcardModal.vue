@@ -8,7 +8,7 @@ import { Modal } from "bootstrap";
 import { computed, ref, watchEffect } from "vue";
 
 
-const flashcard = computed(() => AppState.flashcardToEdit)
+const flashcard = computed(() => AppState.focusedFlashcard)
 
 const flashcardData = ref({
   question: flashcard.value?.question,
@@ -16,9 +16,9 @@ const flashcardData = ref({
 })
 
 watchEffect(() => {
-  if (AppState.flashcardToEdit) {
-    flashcardData.value.question = AppState.flashcardToEdit.question
-    flashcardData.value.answer = AppState.flashcardToEdit.answer
+  if (AppState.focusedFlashcard) {
+    flashcardData.value.question = AppState.focusedFlashcard.question
+    flashcardData.value.answer = AppState.focusedFlashcard.answer
   }
 })
 
