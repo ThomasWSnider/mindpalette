@@ -1,11 +1,15 @@
 <script setup>
+import { AppState } from "@/AppState";
 import { Deck } from "@/models/Deck";
 import { decksService } from "@/services/DecksService";
 import Pop from "@/utils/Pop";
+import { Modal } from "bootstrap";
 import { useRouter } from "vue-router";
 
 
 defineProps({ deck: Deck, isStudyDeck: Boolean })
+
+const router = useRouter()
 
 async function destroyDeck(deck) {
   try {
@@ -19,11 +23,22 @@ async function destroyDeck(deck) {
   }
 }
 
+async function selectStudyDeck(deckId) {
+  try {
+    await decksService.getDeckById(deckId)
+    router.push({ name: 'Study', params: { deckId: deckId } })
+    Modal.getOrCreateInstance('#select-study-deck-modal').hide()
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
 </script>
 
 
 <template>
-  <RouterLink v-if="isStudyDeck" :to="{ name: 'Study', params: { deckId: deck.id } }">
+  <div v-if="isStudyDeck" @click="selectStudyDeck(deck.id)">
     <div class="card text-bg-dark mb-3 selectable shadow" data-bs-toggle="modal"
       data-bs-target="#select-study-deck-modal">
       <img :src="deck.coverImg" class="card-img" :alt="deck.description">
@@ -34,7 +49,7 @@ async function destroyDeck(deck) {
         <p class="fw-semibold fs-6 mb-1">{{ deck.title }}</p>
       </div>
     </div>
-  </RouterLink>
+  </div>
 
   <RouterLink v-else :to="{ name: 'Flashcard', params: { deckId: deck.id } }">
     <div class="card text-bg-dark mb-3 selectable shadow">
