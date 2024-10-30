@@ -57,6 +57,10 @@ function incrementFlashcard() {
   setFocusedFlashcard(currentFlashcardIndex)
 }
 
+function shuffleFlashcards(flashcards) {
+  flashcardsService.shuffleFlashcards(flashcards)
+}
+
 </script>
 
 
