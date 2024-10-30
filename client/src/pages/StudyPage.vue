@@ -10,6 +10,7 @@ const route = useRoute()
 const deck = computed(() => AppState.focusedDeck)
 const flashcards = computed(() => AppState.flashcards)
 const focusedFlashcard = computed(() => AppState.focusedFlashcard)
+let currentFlashcardIndex = 0
 
 onMounted(() => {
   getDeckById(route.params.deckId)
@@ -44,6 +45,18 @@ function setFocusedFlashcard(flashcardIndex) {
   flashcardsService.setFocusedFlashcard(flashcardIndex)
 }
 
+function decrementFlashcard() {
+  currentFlashcardIndex -= 1
+  if (currentFlashcardIndex < 0) currentFlashcardIndex = flashcards.value.length - 1
+  setFocusedFlashcard(currentFlashcardIndex)
+}
+
+function incrementFlashcard() {
+  currentFlashcardIndex += 1
+  if (currentFlashcardIndex > flashcards.value.length - 1) currentFlashcardIndex = 0
+  setFocusedFlashcard(currentFlashcardIndex)
+}
+
 </script>
 
 
@@ -53,9 +66,9 @@ function setFocusedFlashcard(flashcardIndex) {
       <div v-if="deck" class="row">
         <div class="col-12 d-flex justify-content-between align-items-center mb-3">
           <p class="fs-2 m-0">{{ deck.title }}</p>
-          <p class="fs-3 m-0">Card 1/{{ flashcards.length }}</p>
+          <p class="fs-3 m-0">Card {{ `${currentFlashcardIndex + 1}/${flashcards.length}` }}</p>
         </div>
-        <div class="col-12 d-flex justify-content-center">
+        <div class="col-12 d-flex justify-content-center mb-3">
           <div id="flashcard" class="shadow-lg pt-1">
             <hr class="mt-5 red-line">
             <hr class="blue-line">
@@ -65,10 +78,19 @@ function setFocusedFlashcard(flashcardIndex) {
             <hr class="blue-line">
             <hr class="blue-line">
             <hr class="blue-line m-0">
-            <div class="question">
+            <div v-if="focusedFlashcard" class="question">
               <p class="display-4 text-center fw-medium">{{ focusedFlashcard.question }}</p>
             </div>
           </div>
+        </div>
+        <div class="col-4 text-center">
+          <button @click="decrementFlashcard()" class="btn">Back</button>
+        </div>
+        <div class="col-4 text-center">
+          <button class="btn">Shuffle</button>
+        </div>
+        <div class="col-4 text-center">
+          <button @click="incrementFlashcard()" class="btn">Next</button>
         </div>
       </div>
     </div>

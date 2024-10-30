@@ -39,7 +39,6 @@ async editFlashcard(flashcardId, editableFlashcardData){
       AppState.focusedFlashcard = focusedFlashcard
     }
     else if (typeof flashcardIdOrIndex === "number") {
-      logger.log(AppState.flashcards)
       const focusedFlashcard = AppState.flashcards[flashcardIdOrIndex]
       AppState.focusedFlashcard = focusedFlashcard
     }
