@@ -8,10 +8,28 @@ import { useRoute } from "vue-router";
 
 const route = useRoute()
 const deck = computed(() => AppState.focusedDeck)
+const flashcards = computed(() => AppState.flashcards)
+const focusedFlashcard = computed(() => AppState.focusedFlashcard)
 
 onMounted(() => {
-  getFlashcardsForStudyDeck(route.params.deckId)
+  getDeckById(route.params.deckId)
+  getFlashcardsForStudyDeck(route.params.deckId).then(() => {
+    setFocusedFlashcard(0)
+  })
 })
+
+async function getDeckById(deckId) {
+  try {
+    await decksService.getDeckById(deckId)
+    if (deck.value.cardCount <= 0) {
+      decksService.clearFocusedDeck()
+      return
+    }
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
 
 async function getFlashcardsForStudyDeck(deckId) {
   try {
@@ -22,18 +40,20 @@ async function getFlashcardsForStudyDeck(deckId) {
   }
 }
 
-
+function setFocusedFlashcard(flashcardIndex) {
+  flashcardsService.setFocusedFlashcard(flashcardIndex)
+}
 
 </script>
 
 
 <template>
   <section class="d-flex justify-content-center align-items-center mt-5">
-    <div id="content-container" class="shadow rounded px-3 py-2 fw-semibold mt-5">
-      <div class="row">
+    <div id="content-container" class="shadow rounded px-3 py-2 fw-semibold  mt-5">
+      <div v-if="deck" class="row">
         <div class="col-12 d-flex justify-content-between align-items-center mb-3">
           <p class="fs-2 m-0">{{ deck.title }}</p>
-          <p class="fs-3 m-0">Card 1/20</p>
+          <p class="fs-3 m-0">Card 1/{{ flashcards.length }}</p>
         </div>
         <div class="col-12 d-flex justify-content-center">
           <div id="flashcard" class="shadow-lg pt-1">
@@ -44,12 +64,11 @@ async function getFlashcardsForStudyDeck(deckId) {
             <hr class="blue-line">
             <hr class="blue-line">
             <hr class="blue-line">
-            <hr class="blue-line">
-            <hr class="blue-line">
-            <hr class="blue-line">
             <hr class="blue-line m-0">
+            <div class="question">
+              <p class="display-4 text-center fw-medium">{{ focusedFlashcard.question }}</p>
+            </div>
           </div>
-          <p></p>
         </div>
       </div>
     </div>
@@ -67,19 +86,29 @@ async function getFlashcardsForStudyDeck(deckId) {
 
 #flashcard {
   width: 80%;
+  max-height: 420px;
   aspect-ratio: 5/3;
   background-color: #f7ea5a;
+  position: relative;
+
+  >.question {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+  }
 
   >hr.red-line {
     border-color: #E74C3C;
     border-width: 3px;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
 
   >hr.blue-line {
-    border-color: #0D5BA6;
+    border-color: #0d5ca6da;
     border-width: 3px;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
 }
 </style>
