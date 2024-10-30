@@ -31,10 +31,16 @@ async editFlashcard(flashcardId, editableFlashcardData){
     AppState.flashcards = flashcards
   }
 
-  setFocusedFlashcard(flashcardId){
+  setFocusedFlashcard(flashcardIdOrIndex){
     AppState.focusedFlashcard = null
-    const focusedFlashcard = AppState.flashcards.find((flashcard) => flashcard.id === flashcardId)
-    AppState.focusedFlashcard = focusedFlashcard
+    if (typeof flashcardIdOrIndex === "string"){
+      const focusedFlashcard = AppState.flashcards.find((flashcard) => flashcard.id === flashcardIdOrIndex)
+      AppState.focusedFlashcard = focusedFlashcard
+    }
+    else if (typeof flashcardIdOrIndex === "number") {
+      const focusedFlashcard = AppState.flashcards[flashcardIdOrIndex]
+      AppState.focusedFlashcard = focusedFlashcard
+    }
   }
 
 }

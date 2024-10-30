@@ -1,9 +1,28 @@
 <script setup>
 import { AppState } from "@/AppState";
-import { computed } from "vue";
+import { decksService } from "@/services/DecksService";
+import { flashcardsService } from "@/services/FlashcardsService";
+import Pop from "@/utils/Pop";
+import { computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
-
+const route = useRoute()
 const deck = computed(() => AppState.focusedDeck)
+
+onMounted(() => {
+  getFlashcardsForStudyDeck(route.params.deckId)
+})
+
+async function getFlashcardsForStudyDeck(deckId) {
+  try {
+    await flashcardsService.getFlashcardsByDeckId(deckId)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
+
 
 </script>
 

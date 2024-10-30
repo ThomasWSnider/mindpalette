@@ -14,7 +14,7 @@ function openEditModal(flashcardId) {
 
 async function destroyFlashcard(flashcardId) {
   try {
-    const confirm = await Pop.confirm('Are you sure you want to delete this flashcard?', "It will be irretrievable")
+    const confirm = await Pop.confirm('Are you sure you want to delete this flashcard?', "It will be gone forever")
     if (!confirm) return
     await flashcardsService.destroyFlashcard(flashcardId)
   } catch (error) {
