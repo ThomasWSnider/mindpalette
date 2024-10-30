@@ -57,8 +57,9 @@ function incrementFlashcard() {
   setFocusedFlashcard(currentFlashcardIndex)
 }
 
-function shuffleFlashcards(flashcards) {
-  flashcardsService.shuffleFlashcards(flashcards)
+function shuffleFlashcards() {
+  flashcardsService.shuffleFlashcards()
+  setFocusedFlashcard(0)
 }
 
 </script>
@@ -91,7 +92,7 @@ function shuffleFlashcards(flashcards) {
           <button @click="decrementFlashcard()" class="btn">Back</button>
         </div>
         <div class="col-4 text-center">
-          <button class="btn">Shuffle</button>
+          <button @click="shuffleFlashcards()" class="btn">Shuffle</button>
         </div>
         <div class="col-4 text-center">
           <button @click="incrementFlashcard()" class="btn">Next</button>
