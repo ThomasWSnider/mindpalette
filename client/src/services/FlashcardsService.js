@@ -45,7 +45,6 @@ async editFlashcard(flashcardId, editableFlashcardData){
   }
 
   shuffleFlashcards(){ 
-    logger.log(AppState.flashcards)
     const flashcards = AppState.flashcards
     let shuffledFlashcards = [...flashcards]
     for (let i = shuffledFlashcards.length -1; i > 0; i--) {
@@ -53,7 +52,6 @@ async editFlashcard(flashcardId, editableFlashcardData){
       [shuffledFlashcards[i], shuffledFlashcards[randomIndex]] = [shuffledFlashcards[randomIndex], shuffledFlashcards[i]];
     }
     AppState.flashcards = shuffledFlashcards
-    logger.log(AppState.flashcards)
   }
 
 }
