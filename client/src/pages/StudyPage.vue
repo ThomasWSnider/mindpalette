@@ -68,6 +68,7 @@ function toggleAnswer() {
 function shuffleFlashcards() {
   flashcardsService.shuffleFlashcards()
   showAnswer.value = false
+  currentFlashcardIndex = 0
   setFocusedFlashcard(0)
 }
 
@@ -75,14 +76,14 @@ function shuffleFlashcards() {
 
 
 <template>
-  <section class="d-flex justify-content-center align-items-center mt-5">
-    <div id="content-container" class="shadow rounded px-3 py-2 fw-semibold  mt-5">
-      <div v-if="deck" class="row">
-        <div class="col-12 d-flex justify-content-between align-items-center mb-3">
+  <section class="d-flex justify-content-center align-items-center mt-4">
+    <div id="content-container" class="shadow rounded px-3 py-2 fw-semibold">
+      <div v-if="deck" class="row justify-content-center">
+        <div class="col-12 d-flex justify-content-between align-items-center mb-4">
           <p class="fs-2 m-0">{{ deck.title }}</p>
-          <p class="fs-3 m-0">Card {{ `${currentFlashcardIndex + 1}/${flashcards.length}` }}</p>
+          <p class="fs-3 m-0">{{ `${currentFlashcardIndex + 1}/${flashcards.length}` }}</p>
         </div>
-        <div class="col-12 d-flex justify-content-center mb-3">
+        <div class="col-12 d-flex justify-content-center mb-4">
           <div @click="toggleAnswer()" id="flashcard" class="shadow-lg pt-1">
             <hr class="mt-5 red-line">
             <hr class="blue-line">
@@ -98,14 +99,22 @@ function shuffleFlashcards() {
             </div>
           </div>
         </div>
-        <div class="col-4 text-center">
-          <button @click="decrementFlashcard()" class="btn">Back</button>
-        </div>
-        <div class="col-4 text-center">
-          <button @click="shuffleFlashcards()" class="btn">Shuffle</button>
-        </div>
-        <div class="col-4 text-center">
-          <button @click="incrementFlashcard()" class="btn">Next</button>
+        <div class="row ">
+          <div class="col-4 d-flex justify-content-start">
+            <button @click="decrementFlashcard()"
+              class="arrow-btn d-flex justify-content-center align-items-center ms-3 btn btn-outline-success"><i
+                class="mdi display-md-3 display-5 mdi-arrow-left"></i>
+            </button>
+          </div>
+          <div class="col-4 d-flex justify-content-center align-items-center">
+            <button @click="shuffleFlashcards()" class="btn btn-outline-danger fw-semibold fs-3 px-4">Shuffle</button>
+          </div>
+          <div class="col-4 d-flex justify-content-end">
+            <button @click="incrementFlashcard()"
+              class="arrow-btn d-flex justify-content-center align-items-center me-3 btn btn-outline-success"><i
+                class="mdi display-md-3 display-5 mdi-arrow-right"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -131,7 +140,7 @@ function shuffleFlashcards() {
 
   >.flashcard-text {
     position: absolute;
-    top: 45%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90%;
@@ -151,6 +160,30 @@ function shuffleFlashcards() {
     border-color: #0d5ca6da;
     border-width: 3px;
     margin-bottom: 3rem;
+  }
+}
+
+.arrow-btn {
+  height: 80px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: var(--bs-success) solid 3px;
+
+  @media (max-width: 767.98px) {
+    height: 55px;
+  }
+
+  &:hover {
+    background-color: var(--bs-success);
+    color: var(--bs-light);
+  }
+}
+
+.btn-outline-danger {
+  border-width: 2px;
+
+  &:hover {
+    color: var(--bs-light);
   }
 }
 </style>
