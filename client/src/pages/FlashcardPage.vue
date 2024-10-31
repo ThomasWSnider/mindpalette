@@ -45,8 +45,8 @@ async function getFlashcardsByDeckId(deckId) {
 
 
 <template>
-  <section class="d-flex align-items-center justify-content-center mt-5">
-    <div id="content-container" class="shadow rounded px-3 mt-5 container pb-4">
+  <section class="d-flex align-items-center justify-content-center mt-4">
+    <div id="content-container" class="shadow rounded px-3 container pb-4">
       <div v-if="deck">
         <div class="row mt-3">
           <div class="col-12 d-flex justify-content-between align-items-center">

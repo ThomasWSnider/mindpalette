@@ -24,8 +24,8 @@ async function getUserDecks() {
 </script>
 
 <template>
-  <section class="d-flex align-items-center justify-content-center mt-5">
-    <div id="content-container" class="shadow rounded px-3 mt-5">
+  <section class="d-flex align-items-center justify-content-center mt-4">
+    <div id="content-container" class="shadow rounded px-3">
       <p class="fs-3 fw-semibold mt-2 mb-5 ms-2">Decks</p>
       <div class="row mt-5 mx-2">
         <div v-for="deck in decks" :key="deck.id" class="col-lg-3 col-md-4 col-sm-6 col-12">
@@ -43,7 +43,7 @@ async function getUserDecks() {
 <style scoped lang="scss">
 #content-container {
   background-color: #FFFFFF;
-  min-height: 68vh;
+  min-height: 85dvh;
   max-width: 100vw;
   width: 70vw;
 }

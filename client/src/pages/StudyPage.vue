@@ -99,7 +99,7 @@ function shuffleFlashcards() {
             </div>
           </div>
         </div>
-        <div class="row ">
+        <div class="row mb-2">
           <div class="col-4 d-flex justify-content-start">
             <button @click="decrementFlashcard()"
               class="arrow-btn d-flex justify-content-center align-items-center ms-3 btn btn-outline-success"><i
