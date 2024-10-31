@@ -74,6 +74,12 @@ a:hover {
   border-bottom: 2px solid var(--bs-dark);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+
+  &:hover {
+    border-bottom: 2px solid var(--bs-dark);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 }
 
 .navbar-nav .router-link-exact-active {
