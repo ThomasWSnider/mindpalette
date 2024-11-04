@@ -5,6 +5,7 @@ import FlashcardSummary from "@/components/FlashcardSummary.vue";
 import NewFlashcardModal from "@/components/NewFlashcardModal.vue";
 import { decksService } from "@/services/DecksService";
 import { flashcardsService } from "@/services/FlashcardsService";
+import { logger } from "@/utils/Logger";
 import Pop from "@/utils/Pop";
 import { computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";

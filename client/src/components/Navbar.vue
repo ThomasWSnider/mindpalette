@@ -8,6 +8,7 @@ import { AppState } from "@/AppState.js";
 const theme = ref(loadState('theme') || 'light')
 const route = useRoute()
 const account = computed(() => AppState.account)
+const decks = computed(() => AppState.decks.filter((deck) => deck.cardCount > 0))
 
 onMounted(() => {
   document.documentElement.setAttribute('data-bs-theme', theme.value)
@@ -47,7 +48,7 @@ function toggleTheme() {
           </router-link>
         </li>
       </ul>
-      <ul v-if="account" class="navbar-nav me-md-5 me-2" data-bs-toggle="modal"
+      <ul v-if="account && decks.length > 0" class="navbar-nav me-md-5 me-2" data-bs-toggle="modal"
         data-bs-target="#select-study-deck-modal">
         <li>
           <p class="btn text-dark lighten-30 selectable text-uppercase fw-semibold m-0"
