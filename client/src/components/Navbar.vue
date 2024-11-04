@@ -1,11 +1,13 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
 import { useRoute } from "vue-router";
+import { AppState } from "@/AppState.js";
 
 const theme = ref(loadState('theme') || 'light')
 const route = useRoute()
+const account = computed(() => AppState.account)
 
 onMounted(() => {
   document.documentElement.setAttribute('data-bs-theme', theme.value)
@@ -38,14 +40,15 @@ function toggleTheme() {
           </router-link>
         </li>
       </ul>
-      <ul class="navbar-nav me-md-5 me-2">
+      <ul v-if="account" class="navbar-nav me-md-5 me-2">
         <li>
           <router-link :to="{ name: 'Deck' }" class="btn text-dark lighten-30 selectable text-uppercase fw-semibold">
             Decks
           </router-link>
         </li>
       </ul>
-      <ul class="navbar-nav me-md-5 me-2" data-bs-toggle="modal" data-bs-target="#select-study-deck-modal">
+      <ul v-if="account" class="navbar-nav me-md-5 me-2" data-bs-toggle="modal"
+        data-bs-target="#select-study-deck-modal">
         <li>
           <p class="btn text-dark lighten-30 selectable text-uppercase fw-semibold m-0"
             :class="{ 'on-study-page': route.name == 'Study' }">
