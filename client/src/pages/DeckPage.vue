@@ -34,10 +34,10 @@ async function getUserDecks() {
     <div id="content-container" class="shadow rounded px-3">
       <p class="fs-3 fw-semibold mt-2 mb-3 ms-2">Decks</p>
       <div v-if="!noDecks" class="row mx-2">
-        <div v-for="deck in decks" :key="deck.id" class="col-lg-3 col-md-4 col-sm-6 col-12">
+        <div v-for="deck in decks" :key="deck.id" class="col-lg-4 col-md-4 col-sm-6 col-12">
           <DeckCard :deck="deck" :isStudyDeck="false" />
         </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-12">
           <NewDeckButton />
         </div>
       </div>
