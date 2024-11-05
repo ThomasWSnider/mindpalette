@@ -6,10 +6,15 @@ import NewDeckButton from "@/components/NewDeckButton.vue";
 import { decksService } from "@/services/DecksService";
 import { logger } from "@/utils/Logger";
 import Pop from "@/utils/Pop";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watchEffect } from "vue";
 
 const decks = computed(() => AppState.decks)
 let noDecks = ref(false)
+
+watchEffect(() => {
+  if (decks.value.length > 0)
+    noDecks.value = false
+})
 
 onMounted(() => {
   getUserDecks()

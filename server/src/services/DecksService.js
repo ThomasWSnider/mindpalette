@@ -5,7 +5,7 @@ import { Forbidden, NotFound } from "../utils/Errors"
 class DecksService {
   // Creates new Deck
   async createNewDeck(deckData) {
-    const userDeckCount = await this.getAllUserDecks(deckData.creatorId)
+    const userDeckCount = await this.getAllUserDecks(deckData.creatorId, true)
     if (userDeckCount.length > 20) throw new Forbidden('You may not create more than 20 decks')
     const newDeck = await dbContext.Decks.create(deckData)
     await newDeck.populate('cardCount')
@@ -28,9 +28,9 @@ class DecksService {
     return `${deckToEdit.title} edited successfully`
   }
   // Checks user access before fetching all decks tied to an account
-  async getAllUserDecks(userId) {
+  async getAllUserDecks(userId, creatingDeck) {
     const userDecks = await dbContext.Decks.find({ creatorId: userId }).populate('cardCount')
-    if (userDecks.length === 0) throw new NotFound('No decks found for this account')
+    if (userDecks.length === 0 && !creatingDeck) throw new NotFound('No decks found for this account')
     return userDecks
   }
   // Checks user access before fetching a specific Deck by its Id
