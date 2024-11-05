@@ -15,9 +15,10 @@ import SelectStudyDeckModal from "./components/globals/SelectStudyDeckModal.vue"
   <footer class="container-fluid">
     <div class="row align-items-end">
       <div class="col-12 mt-4 text-center">
-        <p class="fs-4 mb-2">|<span class="px-4"><a href="">Portfolio</a></span>|<span class="px-4"><a
-              href="">Portfolio</a></span>|<span class="px-4"><a href="">Portfolio</a></span>|<span class="px-4"><a
-              href="">Portfolio</a></span>|
+        <p class="fs-4 mb-2">|<span class="px-4"><a href="https://twsnider.work/">Portfolio</a></span>|<span
+            class="px-4"><a href="">Email</a></span>|<span class="px-4"><a
+              href="https://www.linkedin.com/in/thomas-snider/">LinkedIn</a></span>|<span class="px-4"><a
+              href="https://github.com/ThomasWSnider">Github</a></span>|
         </p>
       </div>
       <div class="col-12 d-flex align-self-end justify-content-between">
@@ -61,7 +62,7 @@ footer {
 
   small {
     color: var(--bs-page);
-    opacity: 0.5;
+    opacity: 0.75;
   }
 }
 </style>
