@@ -62,17 +62,17 @@ async function createNewDeck() {
                 class="d-flex flex-column justify-content-between">
                 <div class="form-floating mb-3">
                   <input v-model="editableDeckData.title" type="text" class="form-control" id="title"
-                    placeholder="Title">
+                    placeholder="Title" maxlength="20" required>
                   <label for="title">Deck Title</label>
                 </div>
                 <div class="form-floating mb-3">
                   <input v-model="editableDeckData.coverImg" type="url" class="form-control" id="img"
-                    placeholder="Deck Image">
+                    placeholder="Deck Image" maxlength="1000" required>
                   <label for="img">Deck Image</label>
                 </div>
                 <div class="form-floating">
                   <textarea v-model="editableDeckData.description" class="form-control" placeholder="Deck Description"
-                    id="description" style="height: 150px"></textarea>
+                    id="description" style="height: 150px" maxlength="200"></textarea>
                   <label for="description">Deck Description</label>
                 </div>
               </form>

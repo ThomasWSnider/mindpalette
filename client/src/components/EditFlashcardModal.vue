@@ -50,12 +50,12 @@ async function editFlashcard() {
             class="d-flex flex-column justify-content-between">
             <div class="form-floating mb-3">
               <textarea v-model="flashcardData.question" class="form-control" placeholder="Flashcard Question"
-                id="question" style="height: 150px"></textarea>
+                id="question" style="height: 150px" maxlength="200"></textarea>
               <label for="question">Question</label>
             </div>
             <div class="form-floating">
               <input v-model="flashcardData.answer" type="text" class="form-control" id="answer"
-                placeholder="Flashcard Answer">
+                placeholder="Flashcard Answer" maxlength="50">
               <label for="answer">Answer</label>
             </div>
           </form>
