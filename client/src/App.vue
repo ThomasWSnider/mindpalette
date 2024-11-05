@@ -20,8 +20,10 @@ import SelectStudyDeckModal from "./components/globals/SelectStudyDeckModal.vue"
               href="">Portfolio</a></span>|
         </p>
       </div>
-      <div class="col-12 align-self-end">
+      <div class="col-12 d-flex align-self-end justify-content-between">
         <small>© 2024 MindPalette. All rights reserved.</small>
+        <small><a href="https://www.flaticon.com/free-icons/picture" title="picture icons">Picture icons created by
+            Freepik - Flaticon</a></small>
       </div>
     </div>
   </footer>

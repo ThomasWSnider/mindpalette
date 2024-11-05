@@ -1,4 +1,15 @@
 <script setup>
+import { AppState } from "@/AppState";
+import { computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+
+const account = computed(() => AppState.account)
+const router = useRouter()
+
+onMounted(() => {
+  if (account.value) router.push({ name: "Deck" })
+})
 
 </script>
 
@@ -35,5 +46,7 @@
 
 img {
   max-height: 33dvh;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 </style>

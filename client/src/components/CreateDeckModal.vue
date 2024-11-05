@@ -31,7 +31,7 @@ async function createNewDeck() {
 <template>
   <div class="modal fade" id="create-deck-modal" tabindex="-1" aria-labelledby="create-deck-modal-label"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="create-deck-modal">Create A Deck</h1>
@@ -49,6 +49,11 @@ async function createNewDeck() {
                   <div class="deck-title d-flex align-items-end rounded-bottom">
                     <p class="fw-semibold fs-6 mb-1">{{ editableDeckData.title }}</p>
                   </div>
+                </div>
+              </div>
+              <div v-else>
+                <div class="mb-3 placeholder-card">
+                  <img id="placeholder-img" src="/img/Placeholder.png" class="card-img" :alt="`A Placeholder`">
                 </div>
               </div>
             </div>
@@ -86,6 +91,10 @@ async function createNewDeck() {
 <style lang="scss" scoped>
 textarea {
   resize: none;
+}
+
+.modal-dialog {
+  --bs-modal-width: 700px
 }
 
 form {
@@ -128,6 +137,17 @@ form {
     max-height: 33%;
     border-top-right-radius: var(--bs-border-radius);
     background: linear-gradient(to bottom left, #0c0c0c8d, transparent);
+  }
+
+  .placeholder-img {
+    background-color: transparent;
+  }
+
+  .placeholder-card {
+    width: 100%;
+    aspect-ratio: 1/1;
+    max-height: 45dvh;
+    border: none;
   }
 }
 </style>
