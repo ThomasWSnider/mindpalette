@@ -7,6 +7,8 @@ class FlashcardsService {
 
   // Checks user access to Deck before adding a Flashcard to it
   async createFlashcard(flashcardData) {
+    const flashcards = await this.getFlashcardsByDeckId(flashcardData.deckId)
+    if (flashcards.length > 50) throw new Forbidden('You cannot create more than 50 flashcards in a deck')
     await decksService.getDeckById(flashcardData.deckId, flashcardData.creatorId)
     const newFlashcard = await dbContext.Flashcards.create(flashcardData)
     return newFlashcard

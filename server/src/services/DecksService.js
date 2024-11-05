@@ -5,6 +5,8 @@ import { Forbidden, NotFound } from "../utils/Errors"
 class DecksService {
   // Creates new Deck
   async createNewDeck(deckData) {
+    const userDeckCount = await this.getAllUserDecks(deckData.creatorId)
+    if (userDeckCount.length > 20) throw new Forbidden('You may not create more than 20 decks')
     const newDeck = await dbContext.Decks.create(deckData)
     await newDeck.populate('cardCount')
     return newDeck
