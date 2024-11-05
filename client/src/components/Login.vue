@@ -2,11 +2,14 @@
 import { computed } from 'vue';
 import { AppState } from '../AppState.js';
 import { AuthService } from '../services/AuthService.js';
+import { useRouter } from "vue-router";
 
 const identity = computed(() => AppState.identity)
 const account = computed(() => AppState.account)
+const router = useRouter()
 async function login() {
-  AuthService.loginWithPopup()
+  await AuthService.loginWithPopup()
+  router.push({ name: "Deck" })
 }
 async function logout() {
   AuthService.logout()
@@ -16,7 +19,8 @@ async function logout() {
 
 <template>
   <span class="navbar-text">
-    <button class="btn selectable text-success lighten-30 text-uppercase my-2 my-lg-0" @click="login" v-if="!identity">
+    <button class="btn selectable text-success fw-semibold lighten-30 text-uppercase my-2 my-lg-0" @click="login"
+      v-if="!identity">
       Login
     </button>
     <div v-else>

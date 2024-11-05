@@ -34,13 +34,6 @@ function toggleTheme() {
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse ms-5" id="navbarText">
-      <ul class="navbar-nav me-md-5 me-2">
-        <li>
-          <router-link :to="{ name: 'About' }" class="btn text-dark lighten-30 selectable text-uppercase fw-semibold">
-            About
-          </router-link>
-        </li>
-      </ul>
       <ul v-if="account" class="navbar-nav me-md-5 me-2">
         <li>
           <router-link :to="{ name: 'Deck' }" class="btn text-dark lighten-30 selectable text-uppercase fw-semibold">
