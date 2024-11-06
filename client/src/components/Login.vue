@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, watchEffect } from 'vue';
 import { AppState } from '../AppState.js';
 import { AuthService } from '../services/AuthService.js';
 import { useRouter } from "vue-router";
@@ -7,9 +7,12 @@ import { useRouter } from "vue-router";
 const identity = computed(() => AppState.identity)
 const account = computed(() => AppState.account)
 const router = useRouter()
+
+watchEffect(() => {
+  if (account.value) router.push({ name: 'Deck' })
+})
 async function login() {
   await AuthService.loginWithPopup()
-  router.push({ name: "Deck" })
 }
 async function logout() {
   AuthService.logout()
