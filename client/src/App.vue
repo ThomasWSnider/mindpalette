@@ -16,8 +16,7 @@ import SelectStudyDeckModal from "./components/globals/SelectStudyDeckModal.vue"
     <div class="row align-items-end">
       <div class="col-12 mt-4 text-center">
         <p class="fs-4 mb-2">|<span class="px-4"><a href="https://twsnider.work/">Portfolio</a></span>|<span
-            class="px-4"><a href="">Email</a></span>|<span class="px-4"><a
-              href="https://www.linkedin.com/in/thomas-snider/">LinkedIn</a></span>|<span class="px-4"><a
+            class="px-4"><a href="https://www.linkedin.com/in/thomas-snider/">LinkedIn</a></span>|<span class="px-4"><a
               href="https://github.com/ThomasWSnider">Github</a></span>|
         </p>
       </div>
