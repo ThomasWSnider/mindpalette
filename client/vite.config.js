@@ -20,7 +20,7 @@ export default defineConfig({
     }
   },
   build: {
-    sourcemap: false,
+    outDir: 'dist',
   },
   server: {
     port: 8080
