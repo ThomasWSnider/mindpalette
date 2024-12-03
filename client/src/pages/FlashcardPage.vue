@@ -5,7 +5,6 @@ import FlashcardSummary from "@/components/FlashcardSummary.vue";
 import NewFlashcardModal from "@/components/NewFlashcardModal.vue";
 import { decksService } from "@/services/DecksService";
 import { flashcardsService } from "@/services/FlashcardsService";
-import { logger } from "@/utils/Logger";
 import Pop from "@/utils/Pop";
 import { computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -18,12 +17,12 @@ const flashcards = computed(() => AppState.flashcards)
 
 onMounted(() => {
   getDeckById(route.params.deckId)
+  getFlashcardsByDeckId(route.params.deckId)
 })
 
 async function getDeckById(deckId) {
   try {
     await decksService.getDeckById(deckId)
-    await getFlashcardsByDeckId(route.params.deckId)
   }
   catch (error) {
     Pop.error(error);
@@ -35,7 +34,7 @@ async function getFlashcardsByDeckId(deckId) {
     await flashcardsService.getFlashcardsByDeckId(deckId)
   }
   catch (error) {
-    if (error.response.value === 404) return
+    // if (error.response.value === 404) return
     Pop.error(error);
   }
 }
@@ -49,7 +48,7 @@ async function getFlashcardsByDeckId(deckId) {
       <div v-if="deck && flashcards.length > 0">
         <div class="row mt-3">
           <div class="col-12 d-flex justify-content-between align-items-center">
-            <p class="fs-1 fw-bold m-2 mb-4">{{ deck.title }}</p>
+            <p class="fs-1 fw-bold m-2 mb-4">{{ deck?.title }}</p>
             <div>
               <button class="btn btn-primary fw-semibold m-3" data-bs-toggle="modal"
                 data-bs-target="#new-flashcard-modal" title="Create A New Flashcard">
@@ -77,7 +76,7 @@ async function getFlashcardsByDeckId(deckId) {
       <div v-else-if="flashcards.length <= 0">
         <div class="row justify-content-center mt-3">
           <div class="col-12 d-flex justify-content-between align-items-center">
-            <p class="fs-1 fw-bold m-2 mb-4">{{ deck.title }}</p>
+            <p class="fs-1 fw-bold m-2 mb-4">{{ deck?.title }}</p>
           </div>
           <div class="col-12">
             <p v-if="decks.length <= 0" class="text-center fs-4 mt-5">It seems like you haven't made any flashcards yet.

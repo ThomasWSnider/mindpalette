@@ -4,7 +4,6 @@ import CreateDeckModal from "@/components/CreateDeckModal.vue";
 import DeckCard from "@/components/DeckCard.vue";
 import NewDeckButton from "@/components/NewDeckButton.vue";
 import { decksService } from "@/services/DecksService";
-import { logger } from "@/utils/Logger";
 import Pop from "@/utils/Pop";
 import { computed, onMounted, ref, watchEffect } from "vue";
 
