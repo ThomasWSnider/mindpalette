@@ -1,15 +1,14 @@
 <script setup>
 import { AppState } from "@/AppState";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, watch, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 
 
 const account = computed(() => AppState.account)
 const router = useRouter()
 
-onMounted(() => {
-  if (account.value) router.push({ name: "Deck" })
-})
+
+watch(account, () => { if (account.value) router.push({ name: 'Deck' }) }, { immediate: true })
 
 </script>
 

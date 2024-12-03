@@ -8,9 +8,6 @@ const identity = computed(() => AppState.identity)
 const account = computed(() => AppState.account)
 const router = useRouter()
 
-watchEffect(() => {
-  if (account.value) router.push({ name: 'Deck' })
-})
 async function login() {
   await AuthService.loginWithPopup()
 }
