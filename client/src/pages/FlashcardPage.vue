@@ -2,22 +2,24 @@
 import { AppState } from "@/AppState";
 import EditFlashcardModal from "@/components/EditFlashcardModal.vue";
 import FlashcardSummary from "@/components/FlashcardSummary.vue";
+import Loader from "@/components/globals/Loader.vue";
 import NewFlashcardModal from "@/components/NewFlashcardModal.vue";
 import { decksService } from "@/services/DecksService";
 import { flashcardsService } from "@/services/FlashcardsService";
 import Pop from "@/utils/Pop";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute()
-const router = useRouter()
 const decks = computed(() => AppState.decks.filter((deck) => deck.cardCount > 0))
 const deck = computed(() => AppState.focusedDeck)
 const flashcards = computed(() => AppState.flashcards)
+const processingDeck = ref(true)
 
-onMounted(() => {
-  getDeckById(route.params.deckId)
-  getFlashcardsByDeckId(route.params.deckId)
+onMounted(async () => {
+  await getDeckById(route.params.deckId)
+  await getFlashcardsByDeckId(route.params.deckId)
+  processingDeck.value = false
 })
 
 async function getDeckById(deckId) {
@@ -43,9 +45,9 @@ async function getFlashcardsByDeckId(deckId) {
 
 
 <template>
-  <section class="d-flex align-items-center justify-content-center mt-4">
-    <div id="content-container" class="shadow rounded px-3 container pb-4">
-      <div v-if="deck && flashcards.length > 0">
+  <section class="d-flex align-items-center justify-content-center mt-sm-4 mt-0">
+    <div id="content-container" class="shadow rounded px-sm-3 container pb-4">
+      <div v-if="deck && flashcards.length > 0 && !processingDeck">
         <div class="row mt-3">
           <div class="col-12 d-flex justify-content-between align-items-center">
             <p class="fs-1 fw-bold m-2 mb-4">{{ deck?.title }}</p>
@@ -73,7 +75,7 @@ async function getFlashcardsByDeckId(deckId) {
           </div>
         </div>
       </div>
-      <div v-else-if="flashcards.length <= 0">
+      <div v-else-if="flashcards.length <= 0 && !processingDeck">
         <div class="row justify-content-center mt-3">
           <div class="col-12 d-flex justify-content-between align-items-center">
             <p class="fs-1 fw-bold m-2 mb-4">{{ deck?.title }}</p>
@@ -97,7 +99,7 @@ async function getFlashcardsByDeckId(deckId) {
       </div>
       <div v-else>
         <div class="d-flex justify-content-center align-items-center loading-blurb">
-          <p class="fs-2"><i class="mdi mdi-loading mdi-spin"></i> Loading Content</p>
+          <Loader />
         </div>
       </div>
     </div>
@@ -114,6 +116,14 @@ async function getFlashcardsByDeckId(deckId) {
   max-width: 100vw;
   width: 70vw;
   margin-bottom: 104px;
+
+
+  @media only screen and (max-width: 575.98px) {
+    width: 100%;
+    height: 100%;
+    min-height: var(--main-height);
+    margin-bottom: 0;
+  }
 }
 
 #delete-button-spacer {
