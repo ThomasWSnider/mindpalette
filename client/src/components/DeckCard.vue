@@ -129,5 +129,11 @@ img {
   visibility: hidden;
   opacity: 0;
   transition: all 0.15s ease-in;
+
+  @media only screen and (max-width: 575.98px) {
+    opacity: 1;
+    visibility: visible;
+    top: -0.6%;
+  }
 }
 </style>

@@ -34,20 +34,20 @@ async function getUserDecks() {
 </script>
 
 <template>
-  <section class="d-flex align-items-center justify-content-center mt-4">
+  <section class="d-flex align-items-center justify-content-center mt-sm-4 mt-0">
     <div id="content-container" class="shadow rounded px-3">
       <p class="fs-3 fw-semibold mt-2 mb-3 ms-2">Decks</p>
       <div v-if="!noDecks" class="row mx-2">
-        <div v-for="deck in decks" :key="deck.id" class="col-lg-3 col-md-4 col-sm-6 col-12">
+        <div v-for="deck in decks" :key="deck.id" class="col-lg-3 col-md-4 col-6">
           <DeckCard :deck="deck" :isStudyDeck="false" />
         </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+        <div class="col-lg-3 col-md-4 col-6">
           <NewDeckButton />
         </div>
       </div>
       <div v-else class="row justify-content-center mt-5 mx-2">
         <div class="col-12">
-          <p class="fs-5 text-center mb-5">It seems you haven't made any flashcards yet. To get started, click on the
+          <p class="fs-5 text-center mb-3">It seems you haven't made any flashcards yet. To get started, click on the
             button below to create your first flashcard deck!</p>
         </div>
         <div class="col-lg-4 col-sm-6 col-12">
@@ -65,5 +65,11 @@ async function getUserDecks() {
   min-height: 85dvh;
   max-width: 100vw;
   width: 70vw;
+
+  @media only screen and (max-width: 575.98px) {
+    width: 100%;
+    height: 100%;
+    min-height: var(--main-height);
+  }
 }
 </style>

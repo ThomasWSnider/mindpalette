@@ -79,15 +79,21 @@ a:hover {
   }
 }
 
+nav {
+  height: 64px;
+
+  @media only screen and (max-width: 575.98px) {
+    padding-top: 1px;
+  }
+}
+
 .navbar-nav .router-link-exact-active {
   border-bottom: 2px solid var(--bs-dark);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-@media screen and (min-width: 576px) {
-  nav {
-    height: 64px;
-  }
+.navbar-toggler {
+  color: var(--bs-dark);
 }
 </style>

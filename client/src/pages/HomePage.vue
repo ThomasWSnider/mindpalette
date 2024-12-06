@@ -14,9 +14,9 @@ watch(account, () => { if (account.value) router.push({ name: 'Deck' }) }, { imm
 
 
 <template>
-  <section class="d-flex align-items-center justify-content-center mt-4">
+  <section class="d-flex align-items-center justify-content-center mt-sm-4 mt-0">
     <div id="content-container" class="shadow rounded px-3">
-      <div class="d-flex flex-column justify-content-center align-items-center">
+      <div class="d-flex flex-column justify-content-center align-items-center mt-sm-0 mt-5 text-center">
         <img src="/img/MindPaletteLogo.png" alt="A multicolored brain">
         <p class="display-4 fw-semibold mt-2 mb-3 ms-2">Welcome to Mind Palette!</p>
         <p class="ms-2 login-blurb">To begin, click the Login button to log in or sign up</p>
@@ -40,6 +40,12 @@ watch(account, () => { if (account.value) router.push({ name: 'Deck' }) }, { imm
     .login-blurb {
       margin-bottom: 6em;
     }
+  }
+
+  @media only screen and (max-width: 575.98px) {
+    width: 100%;
+    height: 100%;
+    min-height: var(--main-height);
   }
 }
 

@@ -27,11 +27,11 @@
 }
 
 .card {
-  width: 100%;
+  max-width: 30em;
   aspect-ratio: 1/1;
   border-color: var(--bs-success);
   border-width: 1.66px;
-  max-height: 33dvh;
+  max-height: 20em;
 }
 
 .deck-title {

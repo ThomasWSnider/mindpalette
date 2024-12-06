@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { AppState } from '../AppState.js';
+import Loader from "@/components/globals/Loader.vue";
 
 const account = computed(() => AppState.account)
 
@@ -14,7 +15,7 @@ const account = computed(() => AppState.account)
       <p>{{ account.email }}</p>
     </div>
     <div v-else>
-      <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>
+      <Loader />
     </div>
   </div>
 </template>
