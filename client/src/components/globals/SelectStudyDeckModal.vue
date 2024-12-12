@@ -10,8 +10,7 @@ const decks = computed(() => AppState.decks.filter((deck) => deck.cardCount > 0)
 
 
 <template>
-  <div class="modal fade" id="select-study-deck-modal" tabindex="-1" aria-labelledby="select-study-deck-modal-label"
-    aria-hidden="true">
+  <div class="modal fade" id="select-study-deck-modal" tabindex="-1" aria-labelledby="select-study-deck-modal-label">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
