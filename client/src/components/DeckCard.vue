@@ -117,7 +117,7 @@ img {
 
 .delete-button {
   position: absolute;
-  top: -0.33%;
+  top: -0.6%;
   left: -0.33%;
   padding: 0.25em 0.5em;
   max-height: 33%;
@@ -133,7 +133,6 @@ img {
   @media only screen and (max-width: 575.98px) {
     opacity: 1;
     visibility: visible;
-    top: -0.6%;
   }
 }
 </style>

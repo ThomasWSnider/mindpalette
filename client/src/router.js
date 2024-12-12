@@ -20,13 +20,13 @@ const routes = [
   {
     path: '/decks',
     name: 'Deck',
-    component: loadPage('DeckPage'),
+    component: loadPage('DecksPage'),
     beforeEnter: authSettled
   },
   {
     path: '/flashcards/:deckId',
     name: 'Flashcard',
-    component: loadPage('FlashcardPage'),
+    component: loadPage('FlashcardsPage'),
     beforeEnter: authSettled
   },
   {
