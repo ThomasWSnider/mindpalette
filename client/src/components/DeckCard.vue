@@ -79,7 +79,6 @@ img {
 .card {
   width: 100%;
   aspect-ratio: 1/1;
-  max-height: 33dvh;
 
   &:hover {
     .delete-button {

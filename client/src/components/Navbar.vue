@@ -29,19 +29,15 @@ function toggleTheme() {
         <p class="display-5 text-dark m-0 font-sacramento mt-2">Mind Palette</p>
       </div>
     </router-link>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse ms-5" id="navbarText">
-      <ul v-if="account" class="navbar-nav me-md-5 me-2">
+    <div class="collapse navbar-collapse d-none d-sm-block ms-5" id="navbarText">
+      <ul v-if="account" class="navbar-nav me-sm-5">
         <li>
           <router-link :to="{ name: 'Deck' }" class="btn text-dark lighten-30 selectable text-uppercase fw-semibold">
             Decks
           </router-link>
         </li>
       </ul>
-      <ul v-if="account && decks.length > 0" class="navbar-nav me-md-5 me-2" data-bs-toggle="modal"
+      <ul v-if="account && decks.length > 0" class="navbar-nav me-sm-5" data-bs-toggle="modal"
         data-bs-target="#select-study-deck-modal">
         <li>
           <p class="btn text-dark lighten-30 selectable text-uppercase fw-semibold m-0"
@@ -51,6 +47,9 @@ function toggleTheme() {
         </li>
       </ul>
       <!-- LOGIN COMPONENT HERE -->
+    </div>
+    <div>
+      <div class="me-2"></div>
     </div>
     <div>
       <!-- <button class="btn text-light" @click="toggleTheme"
