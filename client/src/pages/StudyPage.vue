@@ -76,9 +76,9 @@ function shuffleFlashcards() {
 
 
 <template>
-  <section class="d-flex justify-content-center align-items-center mt-4">
+  <section class="d-flex justify-content-center align-items-center mt-sm-4">
     <div id="content-container" class="shadow rounded px-3 py-2 fw-semibold">
-      <div v-if="deck" class="row justify-content-center">
+      <div v-if="deck" class="row justify-content-center mt-2 mt-sm-0">
         <div class="col-12 d-flex justify-content-between align-items-center mb-4">
           <p class="fs-2 m-0">{{ deck.title }}</p>
           <p class="fs-3 m-0">{{ `${currentFlashcardIndex + 1}/${flashcards.length}` }}</p>
@@ -128,6 +128,12 @@ function shuffleFlashcards() {
   min-height: 68vh;
   max-width: 100vw;
   width: 70vw;
+
+  @media only screen and (max-width: 575.98px) {
+    width: 100%;
+    height: 100%;
+    min-height: var(--main-height);
+  }
 }
 
 #flashcard {
@@ -160,6 +166,10 @@ function shuffleFlashcards() {
     border-color: #0d5ca6da;
     border-width: 3px;
     margin-bottom: 3rem;
+  }
+
+  @media only screen and (max-width: 575.98px) {
+    width: 90%;
   }
 }
 
