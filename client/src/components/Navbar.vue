@@ -18,15 +18,16 @@ const decks = computed(() => AppState.decks.filter((deck) => deck.cardCount > 0)
       </div>
     </router-link>
     <div class="collapse navbar-collapse d-none d-sm-block ms-5" id="navbarText">
-      <ul v-if="account" class="navbar-nav me-sm-5">
+      <!-- v-if="account" -->
+      <ul class="navbar-nav me-sm-5">
         <li>
           <router-link :to="{ name: 'Deck' }" class="btn text-dark lighten-30 selectable text-uppercase fw-semibold">
             Decks
           </router-link>
         </li>
       </ul>
-      <ul v-if="account && decks.length > 0" class="navbar-nav me-sm-5" data-bs-toggle="modal"
-        data-bs-target="#select-study-deck-modal">
+      <!-- v-if="account && decks.length > 0" -->
+      <ul class="navbar-nav me-sm-5" data-bs-toggle="modal" data-bs-target="#select-study-deck-modal">
         <li>
           <p class="btn text-dark lighten-30 selectable text-uppercase fw-semibold m-0"
             :class="{ 'on-study-page': route.name == 'Study' }">

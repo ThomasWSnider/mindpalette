@@ -76,7 +76,7 @@ function shuffleFlashcards() {
 
 
 <template>
-  <section class="d-flex justify-content-center align-items-center mt-sm-4">
+  <section class="d-sm-flex justify-content-center align-items-center mt-sm-4">
     <div id="content-container" class="shadow rounded px-3 py-2 fw-semibold">
       <div v-if="deck" class="row justify-content-center mt-2 mt-sm-0">
         <div class="col-12 d-flex justify-content-between align-items-center mb-4">
