@@ -7,7 +7,7 @@
   <div class="row align-items-end">
     <div class="col-12 mt-4 text-center">
       <p class="fs-md-4 fs-5 mb-2">|<span class="px-md-4 px-2"><a
-            href="https://twsnider.work/">Portfolio</a></span>|<span class="px-md-4 px-2"><a
+            href="https://thomaswsnider.github.io/tws-portfolio/#/">Portfolio</a></span>|<span class="px-md-4 px-2"><a
             href="https://www.linkedin.com/in/thomas-snider/">LinkedIn</a></span>|<span class="px-md-4 px-2"><a
             href="https://github.com/ThomasWSnider">Github</a></span>|
       </p>
