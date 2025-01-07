@@ -21,7 +21,6 @@ export default defineConfig({
   },
   build: {
     sourcemap: false,
-    outDir: 'docs'
   },
   server: {
     port: 8080
