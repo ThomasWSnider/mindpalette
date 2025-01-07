@@ -4,8 +4,9 @@ import { decksService } from "@/services/DecksService";
 import { flashcardsService } from "@/services/FlashcardsService";
 import { logger } from "@/utils/Logger";
 import Pop from "@/utils/Pop";
+import { Modal } from "bootstrap";
 import { computed, onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute()
 const deck = computed(() => AppState.focusedDeck)
@@ -77,29 +78,27 @@ function shuffleFlashcards() {
 
 <template>
   <section class="d-sm-flex justify-content-center align-items-center mt-sm-4">
-    <div id="content-container" class="shadow rounded px-3 py-2 fw-semibold">
-      <div v-if="deck" class="row justify-content-center mt-2 mt-sm-0">
+    <div id="content-container" class="shadow rounded px-3 py-2 mb-3 fw-semibold d-flex align-items-between">
+      <div v-if="focusedFlashcard" class="row justify-content-center mt-2 mt-sm-0">
         <div class="col-12 d-flex justify-content-between align-items-center mb-4">
           <p class="fs-2 m-0">{{ deck.title }}</p>
           <p class="fs-3 m-0">{{ `${currentFlashcardIndex + 1}/${flashcards.length}` }}</p>
         </div>
-        <div class="col-12 d-flex justify-content-center mb-4">
-          <div @click="toggleAnswer()" id="flashcard" class="shadow-lg pt-1">
-            <hr class="mt-5 red-line">
-            <hr class="blue-line">
-            <hr class="blue-line">
-            <hr class="blue-line">
-            <hr class="blue-line">
-            <hr class="blue-line">
-            <hr class="blue-line">
-            <hr class="blue-line m-0">
-            <div v-if="focusedFlashcard" class="flashcard-text">
-              <p v-if="showAnswer" class="display-4 text-center fw-medium">{{ focusedFlashcard.answer }}</p>
-              <p v-else class="display-4 text-center fw-medium">{{ focusedFlashcard.question }}</p>
+        <div v-if="deck" class="col-12 d-flex justify-content-center mb-4">
+          <Transition mode="out-in">
+            <div v-if="showAnswer" @click="toggleAnswer()" class="shadow pt-1 flashcard">
+              <div class="flashcard-text question d-flex justify-content-center align-items-center">
+                <p class="display-md-4 display-sm-6 display-5 text-center fw-medium">{{ focusedFlashcard.answer }}</p>
+              </div>
             </div>
-          </div>
+            <div v-else @click="toggleAnswer()" class="shadow pt-1 flashcard">
+              <div class="flashcard-text answer d-flex justify-content-center align-items-center">
+                <p class="display-md-4 display-sm-6 display-5 text-center fw-medium">{{ focusedFlashcard.question }}</p>
+              </div>
+            </div>
+          </Transition>
         </div>
-        <div class="row mb-2">
+        <div class="row align-items-center mt-3 mb-2 py-3 study-console-padding">
           <div class="col-4 d-flex justify-content-start">
             <button @click="decrementFlashcard()"
               class="arrow-btn d-flex justify-content-center align-items-center ms-3 btn btn-outline-success"><i
@@ -124,10 +123,13 @@ function shuffleFlashcards() {
 
 <style lang="scss" scoped>
 #content-container {
-  background-color: #FFFFFF;
+  background-color: var(--bs-light);
   min-height: 68vh;
-  max-width: 100vw;
   width: 70vw;
+
+  @media (max-width: 991.98px) {
+    width: 80%;
+  }
 
   @media only screen and (max-width: 575.98px) {
     width: 100%;
@@ -136,25 +138,34 @@ function shuffleFlashcards() {
   }
 }
 
-#flashcard {
+.question,
+.answer {
+  height: 100%;
+  width: 100%;
+  padding: 15px;
+  backface-visibility: hidden;
+
+  >p {
+    user-select: none;
+  }
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  transform: rotateY(90deg)
+}
+
+.flashcard {
   width: 80%;
   max-height: 420px;
   aspect-ratio: 5/3;
-  background-color: #f7ea5a;
-  position: relative;
+  background-image: url('../assets/img/notecard-background.png');
   cursor: pointer;
-
-  >.flashcard-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-
-    >p {
-      user-select: none;
-    }
-  }
 
   >hr.red-line {
     border-color: #E74C3C;
@@ -168,7 +179,7 @@ function shuffleFlashcards() {
     margin-bottom: 3rem;
   }
 
-  @media only screen and (max-width: 575.98px) {
+  @media only screen and (max-width: 991.98px) {
     width: 90%;
   }
 }
@@ -181,6 +192,7 @@ function shuffleFlashcards() {
 
   @media (max-width: 767.98px) {
     height: 55px;
+    width: 55px;
   }
 
   &:hover {
@@ -194,6 +206,15 @@ function shuffleFlashcards() {
 
   &:hover {
     color: var(--bs-light);
+  }
+}
+
+.study-console-padding {
+  bottom: 0;
+  background-color: var(--bs-light);
+
+  @media (max-width: 767.98px) {
+    padding: 0;
   }
 }
 </style>

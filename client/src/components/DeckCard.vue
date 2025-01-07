@@ -25,7 +25,6 @@ async function destroyDeck(deck) {
 
 async function selectStudyDeck(deckId) {
   try {
-    await decksService.getDeckById(deckId)
     router.push({ name: 'Study', params: { deckId: deckId } })
     Modal.getOrCreateInstance('#select-study-deck-modal').hide()
   }
