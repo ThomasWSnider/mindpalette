@@ -9,7 +9,7 @@ const account = computed(() => AppState.account)
 const router = useRouter()
 
 async function login() {
-  await AuthService.loginWithPopup()
+  await AuthService.loginWithRedirect()
 }
 async function logout() {
   AuthService.logout()
