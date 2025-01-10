@@ -43,8 +43,7 @@ const decks = computed(() => AppState.decks.filter((deck) => deck.cardCount > 0)
           Decks
         </router-link>
       </div>
-      <div v-if="account && decks.length > 0" class="me-2" data-bs-toggle="modal"
-        data-bs-target="#select-study-deck-modal">
+      <div class="me-2" data-bs-toggle="modal" data-bs-target="#select-study-deck-modal">
         <div>
           <p class="btn text-dark lighten-30 selectable text-uppercase fw-semibold m-0"
             :class="{ 'on-study-page': route.name == 'Study' }">
