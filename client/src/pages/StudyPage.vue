@@ -52,6 +52,7 @@ function setFocusedFlashcard(flashcardIndex) {
 }
 
 function decrementFlashcard() {
+  shuffleNextCard()
   currentFlashcardIndex.value -= 1
   if (currentFlashcardIndex.value < 0) currentFlashcardIndex.value = flashcards.value.length - 1
   showAnswer.value = false
@@ -59,12 +60,17 @@ function decrementFlashcard() {
 }
 
 function incrementFlashcard() {
-  showNext.value = true
-  shuffle.value = false
+  shuffleNextCard()
   currentFlashcardIndex.value += 1
   if (currentFlashcardIndex.value > flashcards.value.length - 1) currentFlashcardIndex.value = 0
   showAnswer.value = false
   setFocusedFlashcard(currentFlashcardIndex.value)
+
+}
+
+function shuffleNextCard() {
+  showNext.value = true
+  shuffle.value = false
   setTimeout(() => shuffle.value = true, 450)
   setTimeout(() => showNext.value = false, 550)
 }
@@ -166,7 +172,6 @@ function shuffleFlashcards() {
   height: 100%;
   width: 100%;
   padding: 15px;
-  // backface-visibility: hidden;
 
   >p {
     user-select: none;
@@ -204,7 +209,7 @@ function shuffleFlashcards() {
 .card-shuffle-enter-active,
 .card-shuffle-leave-active {
   --bs-box-shadow: 0;
-  transition: all 0.5s linear;
+  transition: all 0.5s .5s linear;
   transform-origin: bottom right;
 }
 
@@ -213,16 +218,16 @@ function shuffleFlashcards() {
   opacity: 0;
   transform: rotateZ(20deg) translateY(-50px) translateX(25px);
 
-  // .flashcard {
-  //   background-image: url(https://gifdb.com/images/high/peace-out-ghosted-disappearing-meme-sv0vi30z56ml8s05.gif);
-  //   background-size: cover;
-  //   background-position: center;
+  .flashcard {
+    background-image: url(https://gifdb.com/images/high/peace-out-ghosted-disappearing-meme-sv0vi30z56ml8s05.gif);
+    background-size: cover;
+    background-position: center;
 
-  //   >.question,
-  //   .answer {
-  //     opacity: 0;
-  //   }
-  // }
+    >.question,
+    .answer {
+      opacity: 0;
+    }
+  }
 }
 
 .flashcard {
