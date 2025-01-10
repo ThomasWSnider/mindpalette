@@ -45,13 +45,16 @@ async editFlashcard(flashcardId, editableFlashcardData){
   }
 
   shuffleFlashcards(){ 
-    const flashcards = AppState.flashcards
-    let shuffledFlashcards = [...flashcards]
-    for (let i = shuffledFlashcards.length -1; i > 0; i--) {
-      const randomIndex = Math.floor(Math.random() * (i + 1));
-      [shuffledFlashcards[i], shuffledFlashcards[randomIndex]] = [shuffledFlashcards[randomIndex], shuffledFlashcards[i]];
-    }
-    AppState.flashcards = shuffledFlashcards
+    // const flashcards = AppState.flashcards
+    // let shuffledFlashcards = [...flashcards]
+    // for (let i = shuffledFlashcards.length -1; i > 0; i--) {
+    //   const randomIndex = Math.floor(Math.random() * (i + 1));
+    //   [shuffledFlashcards[i], shuffledFlashcards[randomIndex]] = [shuffledFlashcards[randomIndex], shuffledFlashcards[i]];
+    // }
+    // AppState.flashcards = shuffledFlashcards
+
+    // It doesn't have to be so hard Thomas ^
+    AppState.flashcards.sort(()=> Math.random()-.5)
   }
 
 }

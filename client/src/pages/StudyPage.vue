@@ -5,15 +5,18 @@ import { flashcardsService } from "@/services/FlashcardsService";
 import { logger } from "@/utils/Logger";
 import Pop from "@/utils/Pop";
 import { Modal } from "bootstrap";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute()
 const deck = computed(() => AppState.focusedDeck)
 const flashcards = computed(() => AppState.flashcards)
 const focusedFlashcard = computed(() => AppState.focusedFlashcard)
-let currentFlashcardIndex = 0
+const shuffle = ref(true)
+let currentFlashcardIndex = ref(0)
 let showAnswer = ref(false)
+const showNext = ref(false)
+const nextFlashCard = computed(() => AppState.flashcards[currentFlashcardIndex.value])
 
 onMounted(() => {
   getDeckById(route.params.deckId)
@@ -49,17 +52,21 @@ function setFocusedFlashcard(flashcardIndex) {
 }
 
 function decrementFlashcard() {
-  currentFlashcardIndex -= 1
-  if (currentFlashcardIndex < 0) currentFlashcardIndex = flashcards.value.length - 1
+  currentFlashcardIndex.value -= 1
+  if (currentFlashcardIndex.value < 0) currentFlashcardIndex.value = flashcards.value.length - 1
   showAnswer.value = false
-  setFocusedFlashcard(currentFlashcardIndex)
+  setFocusedFlashcard(currentFlashcardIndex.value)
 }
 
 function incrementFlashcard() {
-  currentFlashcardIndex += 1
-  if (currentFlashcardIndex > flashcards.value.length - 1) currentFlashcardIndex = 0
+  showNext.value = true
+  shuffle.value = false
+  currentFlashcardIndex.value += 1
+  if (currentFlashcardIndex.value > flashcards.value.length - 1) currentFlashcardIndex.value = 0
   showAnswer.value = false
-  setFocusedFlashcard(currentFlashcardIndex)
+  setFocusedFlashcard(currentFlashcardIndex.value)
+  setTimeout(() => shuffle.value = true, 450)
+  setTimeout(() => showNext.value = false, 550)
 }
 
 function toggleAnswer() {
@@ -69,7 +76,7 @@ function toggleAnswer() {
 function shuffleFlashcards() {
   flashcardsService.shuffleFlashcards()
   showAnswer.value = false
-  currentFlashcardIndex = 0
+  currentFlashcardIndex.value = 0
   setFocusedFlashcard(0)
 }
 
@@ -84,20 +91,36 @@ function shuffleFlashcards() {
           <p class="fs-2 m-0">{{ deck.title }}</p>
           <p class="fs-3 m-0">{{ `${currentFlashcardIndex + 1}/${flashcards.length}` }}</p>
         </div>
-        <div v-if="deck" class="col-12 d-flex justify-content-center mb-4">
-          <Transition mode="out-in">
-            <div v-if="showAnswer" @click="toggleAnswer()" class="shadow pt-1 flashcard">
-              <div class="flashcard-text question d-flex justify-content-center align-items-center">
-                <p class="display-md-4 display-sm-6 display-5 text-center fw-medium">{{ focusedFlashcard.answer }}</p>
+        <section v-if="deck" class="card-display px-md-5 px-3 py-2">
+          <div :class="{ 'opacity-0': !showNext }">
+            <div class="pt-1 flashcard ">
+              <div class="flashcard-text answer d-flex justify-content-center align-items-center">
+                <p class="display-md-4 display-sm-6 display-5 text-center fw-medium ">{{ nextFlashCard.question
+                  }}
+                </p>
               </div>
             </div>
-            <div v-else @click="toggleAnswer()" class="shadow pt-1 flashcard">
-              <div class="flashcard-text answer d-flex justify-content-center align-items-center">
-                <p class="display-md-4 display-sm-6 display-5 text-center fw-medium">{{ focusedFlashcard.question }}</p>
-              </div>
+          </div>
+          <Transition name="card-shuffle" mode="out-in">
+            <div v-if="shuffle">
+              <Transition mode="out-in">
+                <div v-if="showAnswer" @click="toggleAnswer()" class="pt-1 flashcard">
+                  <div class="flashcard-text question d-flex justify-content-center align-items-center">
+                    <p class="display-md-4 display-sm-6 display-5 text-center fw-medium">{{ focusedFlashcard.answer }}
+                    </p>
+                  </div>
+                </div>
+                <div v-else @click="toggleAnswer()" class="pt-1 flashcard">
+                  <div class="flashcard-text answer d-flex justify-content-center align-items-center">
+                    <p class="display-md-4 display-sm-6 display-5 text-center fw-medium">{{ focusedFlashcard.question
+                      }}
+                    </p>
+                  </div>
+                </div>
+              </Transition>
             </div>
           </Transition>
-        </div>
+        </section>
         <div class="row align-items-center mt-3 mb-2 py-3 study-console-padding">
           <div class="col-4 d-flex justify-content-start">
             <button @click="decrementFlashcard()"
@@ -143,10 +166,27 @@ function shuffleFlashcards() {
   height: 100%;
   width: 100%;
   padding: 15px;
-  backface-visibility: hidden;
+  // backface-visibility: hidden;
 
   >p {
     user-select: none;
+  }
+}
+
+.opacity-0 {
+  pointer-events: none;
+}
+
+.card-display {
+  display: grid;
+  place-content: center;
+  grid-template-columns: 1f;
+  grid-template-rows: 1fr;
+  filter: drop-shadow(var(--bs-box-shadow));
+
+  &>* {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
   }
 }
 
@@ -160,28 +200,36 @@ function shuffleFlashcards() {
   transform: rotateY(90deg)
 }
 
+
+.card-shuffle-enter-active,
+.card-shuffle-leave-active {
+  --bs-box-shadow: 0;
+  transition: all 0.5s linear;
+  transform-origin: bottom right;
+}
+
+
+.card-shuffle-leave-to {
+  opacity: 0;
+  transform: rotateZ(20deg) translateY(-50px) translateX(25px);
+
+  // .flashcard {
+  //   background-image: url(https://gifdb.com/images/high/peace-out-ghosted-disappearing-meme-sv0vi30z56ml8s05.gif);
+  //   background-size: cover;
+  //   background-position: center;
+
+  //   >.question,
+  //   .answer {
+  //     opacity: 0;
+  //   }
+  // }
+}
+
 .flashcard {
-  width: 80%;
-  max-height: 420px;
+  width: 100%;
   aspect-ratio: 5/3;
   background-image: url('../assets/img/notecard-background.png');
   cursor: pointer;
-
-  >hr.red-line {
-    border-color: #E74C3C;
-    border-width: 3px;
-    margin-bottom: 3rem;
-  }
-
-  >hr.blue-line {
-    border-color: #0d5ca6da;
-    border-width: 3px;
-    margin-bottom: 3rem;
-  }
-
-  @media only screen and (max-width: 991.98px) {
-    width: 90%;
-  }
 }
 
 .arrow-btn {
