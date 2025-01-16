@@ -19,7 +19,7 @@ const decks = computed(() => AppState.decks.filter((deck) => deck.cardCount > 0)
     </router-link>
     <div class="collapse navbar-collapse d-none d-sm-block ms-5" id="navbarText">
       <!-- v-if="account" -->
-      <ul class="navbar-nav me-sm-5">
+      <ul v-if="decks.length > 0" class="navbar-nav me-sm-5">
         <li>
           <router-link :to="{ name: 'Deck' }" class="btn text-dark lighten-30 selectable text-uppercase fw-semibold">
             Decks
@@ -27,7 +27,8 @@ const decks = computed(() => AppState.decks.filter((deck) => deck.cardCount > 0)
         </li>
       </ul>
       <!-- v-if="account && decks.length > 0" -->
-      <ul class="navbar-nav me-sm-5" data-bs-toggle="modal" data-bs-target="#select-study-deck-modal">
+      <ul v-if="decks.length > 0" class="navbar-nav me-sm-5" data-bs-toggle="modal"
+        data-bs-target="#select-study-deck-modal">
         <li>
           <p class="btn text-dark lighten-30 selectable text-uppercase fw-semibold m-0"
             :class="{ 'on-study-page': route.name == 'Study' }">

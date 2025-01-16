@@ -14,7 +14,7 @@ class DecksService {
   // Checks user access before deleting a specific Deck
   async destroyDeck(deckId, userId) {
     const deckToDestroy = await dbContext.Decks.findById(deckId)
-    if (deckToDestroy.creatorId != userId) throw new Forbidden('You can not delete a deck you did not create')
+    if (deckToDestroy.creatorId != userId && !deckToDestroy.isStarterDeck) throw new Forbidden('You can not delete a deck you did not create')
     await deckToDestroy.deleteOne()
     return `${deckToDestroy.title} has been deleted successfully`
   }

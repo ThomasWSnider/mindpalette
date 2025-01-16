@@ -12,6 +12,7 @@ const editableDeckData = ref({
 })
 
 async function createNewDeck() {
+  Modal.getOrCreateInstance("#create-deck-modal").hide()
   try {
     await decksService.createNewDeck(editableDeckData.value)
     editableDeckData.value = {
@@ -19,7 +20,6 @@ async function createNewDeck() {
       coverImg: "",
       description: ""
     }
-    Modal.getOrCreateInstance("#create-deck-modal").hide()
   } catch (error) {
     Pop.error(error);
   }
@@ -62,7 +62,7 @@ async function createNewDeck() {
                 class="d-flex flex-column justify-content-between">
                 <div class="form-floating mb-3">
                   <input v-model="editableDeckData.title" type="text" class="form-control" id="title"
-                    placeholder="Title" maxlength="20" required>
+                    placeholder="Title" maxlength="25" required>
                   <label for="title">Deck Title</label>
                 </div>
                 <div class="form-floating mb-3">
