@@ -4,7 +4,6 @@ import { decksService } from "./DecksService"
 
 
 class FlashcardsService {
-
   // Checks user access to Deck before adding a Flashcard to it
   async createFlashcard(flashcardData) {
     await decksService.getDeckById(flashcardData.deckId, flashcardData.creatorId)
@@ -42,6 +41,13 @@ class FlashcardsService {
     if (flashcards.length === 0) throw new NotFound(`No flashcards found for ${deckToAccess.title}`)
     return flashcards
   }
+
+  async getFlashcardsForStarterDeck(deckId) {
+    const deckToAccess = await decksService.getStarterDeckById(deckId)
+    const flashcards = await dbContext.Flashcards.find({ deckId: deckId })
+    return flashcards
+  }
+
 }
 
 export const flashcardsService = new FlashcardsService

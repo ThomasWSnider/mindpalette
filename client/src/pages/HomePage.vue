@@ -1,11 +1,26 @@
 <script setup>
 import { AppState } from "@/AppState";
+import { decksService } from "@/services/DecksService";
+import Pop from "@/utils/Pop";
 import { computed, onMounted, watch, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 
 
 const account = computed(() => AppState.account)
 const router = useRouter()
+
+onMounted(async () => {
+  if (!account.value) await getPublicDecks()
+})
+
+
+async function getPublicDecks() {
+  try {
+    await decksService.getPublicDecks()
+  } catch (error) {
+    Pop.error(error);
+  }
+}
 
 
 watch(account, () => { if (account.value) router.push({ name: 'Deck' }) }, { immediate: true })

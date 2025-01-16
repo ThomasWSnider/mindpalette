@@ -9,6 +9,8 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute()
+const account = computed(() => AppState.account)
+const decks = computed(() => AppState.decks)
 const deck = computed(() => AppState.focusedDeck)
 const flashcards = computed(() => AppState.flashcards)
 const focusedFlashcard = computed(() => AppState.focusedFlashcard)
@@ -18,11 +20,22 @@ let showAnswer = ref(false)
 const showNext = ref(false)
 const nextFlashCard = computed(() => AppState.flashcards[currentFlashcardIndex.value])
 
-onMounted(() => {
-  getDeckById(route.params.deckId)
-  getFlashcardsForStudyDeck(route.params.deckId).then(() => {
-    setFocusedFlashcard(0)
-  })
+onMounted(async () => {
+  if (account.value) {
+    if (decks.value.length === 0) await getUserDecks()
+    await getDeckById(route.params.deckId)
+    await getFlashcardsForStudyDeck(route.params.deckId).then(() => {
+      setFocusedFlashcard(0)
+    })
+  }
+  else {
+    if (decks.value.length === 0) await getPublicDecks()
+    await getPublicDeckById(route.params.deckId)
+    await getFlashcardsForStarterDeck(route.params.deckId).then(() => {
+      setFocusedFlashcard(0)
+    })
+  }
+
 })
 
 async function getDeckById(deckId) {
@@ -43,6 +56,38 @@ async function getFlashcardsForStudyDeck(deckId) {
     await flashcardsService.getFlashcardsByDeckId(deckId)
   }
   catch (error) {
+    Pop.error(error);
+  }
+}
+
+async function getFlashcardsForStarterDeck(deckId) {
+  try {
+    await flashcardsService.getFlashcardsForStarterDeck(deckId)
+  } catch (error) {
+    Pop.error(error);
+  }
+}
+
+async function getPublicDeckById(deckId) {
+  try {
+    await decksService.getPublicDeckById(deckId)
+  } catch (error) {
+    Pop.error(error)
+  }
+}
+
+async function getUserDecks() {
+  try {
+    await decksService.getUserDecks()
+  } catch (error) {
+    Pop.error(error);
+  }
+}
+
+async function getPublicDecks() {
+  try {
+    await decksService.getPublicDecks()
+  } catch (error) {
     Pop.error(error);
   }
 }

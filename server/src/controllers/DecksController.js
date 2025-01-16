@@ -7,6 +7,8 @@ export class DecksController extends BaseController {
   constructor() {
     super('api/decks')
     this.router
+      .get('/starterDecks', this.getStarterDecks)
+      .get('/starterDecks/:deckId', this.getStarterDeckById)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getAllUserDecks)
       .get('/:deckId', this.getDeckById)
@@ -65,6 +67,24 @@ export class DecksController extends BaseController {
       const userId = request.userInfo.id
       const deckId = request.params.deckId
       const deck = await decksService.getDeckById(deckId, userId)
+      response.send(deck)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getStarterDecks(request, response, next) {
+    try {
+      const decks = await decksService.getStarterDecks()
+      response.send(decks)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getStarterDeckById(request, response, next) {
+    try {
+      const deck = await decksService.getStarterDeckById(request.params.deckId)
       response.send(deck)
     } catch (error) {
       next(error)

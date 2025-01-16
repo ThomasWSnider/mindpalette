@@ -4,7 +4,6 @@ import { AppState } from "@/AppState.js"
 import { logger } from "@/utils/Logger.js"
 
 class FlashcardsService{
-
 async createFlashcard(flashcardData){
   const response = await api.post("api/flashcards", flashcardData)
   const newFlashcard = new Flashcard(response.data)
@@ -44,6 +43,14 @@ async editFlashcard(flashcardId, editableFlashcardData){
     }
   }
 
+  async getFlashcardsForStarterDeck(deckId) {
+    AppState.flashcards = null
+    const response = await api.get(`api/flashcards/collections/starterDecks/${deckId}`)
+    const flashcards = response.data.map((flashcard) => new Flashcard(flashcard))
+    AppState.flashcards = flashcards
+  }
+
+
   shuffleFlashcards(){ 
     // const flashcards = AppState.flashcards
     // let shuffledFlashcards = [...flashcards]
@@ -52,8 +59,8 @@ async editFlashcard(flashcardId, editableFlashcardData){
     //   [shuffledFlashcards[i], shuffledFlashcards[randomIndex]] = [shuffledFlashcards[randomIndex], shuffledFlashcards[i]];
     // }
     // AppState.flashcards = shuffledFlashcards
-
     // It doesn't have to be so hard Thomas ^
+
     AppState.flashcards.sort(()=> Math.random()-.5)
   }
 

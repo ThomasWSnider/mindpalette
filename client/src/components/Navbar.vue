@@ -19,7 +19,7 @@ const decks = computed(() => AppState.decks.filter((deck) => deck.cardCount > 0)
     </router-link>
     <div class="collapse navbar-collapse d-none d-sm-block ms-5" id="navbarText">
       <!-- v-if="account" -->
-      <ul v-if="decks.length > 0" class="navbar-nav me-sm-5">
+      <ul v-if="account && decks.length > 0" class="navbar-nav me-sm-5">
         <li>
           <router-link :to="{ name: 'Deck' }" class="btn text-dark lighten-30 selectable text-uppercase fw-semibold">
             Decks
@@ -39,7 +39,7 @@ const decks = computed(() => AppState.decks.filter((deck) => deck.cardCount > 0)
       <!-- LOGIN COMPONENT HERE -->
     </div>
     <div class="d-flex d-sm-none">
-      <div class="me-2 mobile-deck-nav">
+      <div v-if="account && decks.length > 0" class="me-2 mobile-deck-nav">
         <router-link :to="{ name: 'Deck' }" class="btn text-dark lighten-30 selectable text-uppercase fw-semibold">
           Decks
         </router-link>

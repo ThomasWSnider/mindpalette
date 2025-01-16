@@ -34,6 +34,18 @@ async destroyDeck(deckId){
     const focusedDeck = new Deck(response.data)
     AppState.focusedDeck = focusedDeck
   }
+
+  async getPublicDecks() {
+    const response = await api.get('api/decks/starterDecks')
+    AppState.decks = response.data.map((deck) => new Deck(deck))
+  }
+
+  async getPublicDeckById(deckId) {
+    AppState.focusedDeck = null
+    const response = await api.get(`api/decks/starterDecks/${deckId}`)
+    const focusedDeck = new Deck(response.data)
+    AppState.focusedDeck = focusedDeck
+  }
 }
 
 export const decksService = new DecksService()

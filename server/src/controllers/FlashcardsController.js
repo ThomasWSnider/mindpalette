@@ -7,6 +7,7 @@ export class FlashcardsController extends BaseController {
   constructor() {
     super(`api/flashcards`)
     this.router
+      .get('/collections/starterDecks/:deckId', this.getFlashcardsForStarterDeck)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createFlashcard)
       .get('/collections/:deckId', this.getFlashcardsByDeckId)
@@ -65,6 +66,15 @@ export class FlashcardsController extends BaseController {
       const userId = request.userInfo.id
       const deckId = request.params.deckId
       const flashcards = await flashcardsService.getFlashcardsByDeckId(deckId, userId)
+      response.send(flashcards)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getFlashcardsForStarterDeck(request, response, next) {
+    try {
+      const flashcards = await flashcardsService.getFlashcardsForStarterDeck(request.params.deckId)
       response.send(flashcards)
     } catch (error) {
       next(error)
