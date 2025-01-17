@@ -1,15 +1,31 @@
 <script setup>
+import { AppState } from "@/AppState";
 import { Flashcard } from "@/models/Flashcard";
 import { flashcardsService } from "@/services/FlashcardsService";
+import { logger } from "@/utils/Logger";
 import Pop from "@/utils/Pop";
 import { Modal } from "bootstrap";
+import { ref, watchEffect } from "vue";
 
 
-defineProps({ flashcard: Flashcard })
+const props = defineProps({ flashcard: Flashcard })
 
-function openEditModal(flashcardId) {
-  flashcardsService.setFocusedFlashcard(flashcardId)
-  Modal.getOrCreateInstance('#edit-flashcard-modal').show()
+const editable = ref(false)
+
+const flashcardData = ref({
+  question: props.flashcard?.question,
+  answer: props.flashcard?.answer,
+})
+
+watchEffect(() => {
+  if (AppState.focusedFlashcard) {
+    flashcardData.value.question = AppState.focusedFlashcard.question
+    flashcardData.value.answer = AppState.focusedFlashcard.answer
+  }
+})
+
+function toggleEditability() {
+  editable.value = true
 }
 
 async function destroyFlashcard(flashcardId) {
@@ -22,30 +38,72 @@ async function destroyFlashcard(flashcardId) {
   }
 }
 
+async function editFlashcard() {
+  try {
+    await flashcardsService.editFlashcard(props.flashcard.id, flashcardData.value)
+    editable.value = false
+    Pop.success("Flashcard edited successfully")
+  } catch (error) {
+    Pop.error(error);
+  }
+}
+
 </script>
 
 
 <template>
-  <div class="justify-content-sm-between mb-4 row">
-    <i @click="destroyFlashcard(flashcard.id)" role="button"
-      class="mdi mdi-close text-danger fs-2 selectable rounded my-auto d-none d-sm-block col-1"
-      title="Delete Flashcard"></i>
-    <div class="card-info rounded-4 shadow col-sm-11 col-12">
+  <div v-if="!editable" class="justify-content-sm-between mb-4 row">
+    <div class="card-info rounded-4 pe-2 shadow col-12">
       <div class="row">
         <p class="my-auto col-6 py-1 fw-semibold">{{ flashcard.question }}</p>
         <p class="my-auto pe-4 col-4 py-1 text-center">{{ flashcard.answer }}</p>
-        <div class="col-2 d-none d-sm-flex pe-0">
-          <button @click="openEditModal(flashcard.id)"
+        <div class="col-2 d-flex pe-0">
+          <button @click="toggleEditability"
             class="edit-button btn btn-success rounded-end-4 rounded-start-0 text-light" title="Edit Flashcard">
             <p class="fw-semibold m-0 d-none d-md-block fs-5">Edit</p>
             <i class="mdi mdi-file-document-edit-outline d-block d-md-none"></i>
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div v-else class="justify-content-sm-between mb-4 row">
+    <div class="card-info rounded-4 pe-2 shadow col-12">
+      <div class="row">
+        <form @submit.prevent="editFlashcard()" id="edit-flashcard-form" class="col-10">
+          <div class="row align-items-center">
+            <div class="my-2 mx-auto col-8">
+              <label for="question">Question</label>
+              <textarea v-model="flashcardData.question" class="form-control" placeholder="Flashcard Question"
+                id="question" style="height: 100px" maxlength="200"></textarea>
+            </div>
+            <div class="col-4 mx-auto">
+              <label for="answer">Answer</label>
+              <input v-model="flashcardData.answer" type="text" class="form-control" id="answer"
+                placeholder="Flashcard Answer" maxlength="50">
+            </div>
+          </div>
+        </form>
+        <div class="col-2 d-none d-sm-flex pe-0">
+          <button type="submit" form="edit-flashcard-form" class="edit-button btn btn-success rounded-0 text-light px-1"
+            title="Edit Flashcard">
+            <p class="fw-semibold m-0 d-none d-md-block fs-2 mt-1">
+              <i class="mdi mdi-check d-block"></i>
+            </p>
+          </button>
+          <button @click="destroyFlashcard(flashcard.id)"
+            class="edit-button btn btn-danger px-1 rounded-end-4 rounded-start-0 text-light" title="Edit Flashcard">
+            <p class="fw-semibold m-0 d-none d-md-block fs-2 mt-1">
+              <i class="mdi mdi-delete-outline d-block"></i>
+            </p>
+          </button>
+        </div>
         <div
           class="col-2 d-flex flex-column align-items-end justify-content-center pe-0 d-sm-none mobile-buttons-container">
-          <button @click="openEditModal(flashcard.id)"
+          <button type="submit" form="edit-flashcard-form"
             class="d-block d-sm-none btn btn-success text-light rounded-top edit">
-            <i class="mdi mdi-file-document-edit-outline d-block d-md-none"></i>
+            <i class="mdi mdi-check d-block d-md-none"></i>
           </button>
           <button @click="destroyFlashcard(flashcard.id)"
             class="d-block d-sm-none btn btn-danger text-light rounded-bottom delete">
