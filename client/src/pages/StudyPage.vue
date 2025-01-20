@@ -5,7 +5,7 @@ import { flashcardsService } from "@/services/FlashcardsService";
 import { logger } from "@/utils/Logger";
 import Pop from "@/utils/Pop";
 import { Modal } from "bootstrap";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute()
@@ -35,7 +35,23 @@ onMounted(async () => {
       setFocusedFlashcard(0)
     })
   }
+})
 
+watch(() => route.params.deckId, async () => {
+  if (account.value) {
+    if (decks.value.length === 0) await getUserDecks()
+    await getDeckById(route.params.deckId)
+    await getFlashcardsForStudyDeck(route.params.deckId).then(() => {
+      setFocusedFlashcard(0)
+    })
+  }
+  else {
+    if (decks.value.length === 0) await getPublicDecks()
+    await getPublicDeckById(route.params.deckId)
+    await getFlashcardsForStarterDeck(route.params.deckId).then(() => {
+      setFocusedFlashcard(0)
+    })
+  }
 })
 
 async function getDeckById(deckId) {
@@ -277,6 +293,7 @@ function shuffleFlashcards() {
 
 .flashcard {
   width: 100%;
+  max-height: 65dvh;
   aspect-ratio: 5/3;
   background-image: url('../assets/img/notecard-background.png');
   cursor: pointer;
